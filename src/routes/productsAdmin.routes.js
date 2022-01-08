@@ -2,6 +2,11 @@ const { Router } = require("express");
 const router = Router();
 
 const {
+  hasProduct,
+  isProductInDB,
+} = require("../middlewares/productsAdmin.middlewares");
+
+const {
   getAllProducts,
   getProductById,
   createProduct,
@@ -9,11 +14,11 @@ const {
   deleteProduct,
 } = require("../controllers/productsAdmin.controller");
 
-router.get("/", getAllProducts);
-router.get("/:id", getProductById);
+router.get("/", hasProduct, getAllProducts);
+router.get("/:id", isProductInDB, getProductById);
 router.post("/", createProduct);
-router.put("/:id", updateProduct);
-router.delete("/:id", deleteProduct);
+router.put("/:id", isProductInDB, updateProduct);
+router.delete("/:id", isProductInDB, deleteProduct);
 
 module.exports = router;
 
