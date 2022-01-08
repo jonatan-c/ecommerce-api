@@ -9,6 +9,10 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dialect: "mysql",
+    logging: false,
+    define: {
+      freezeTableName: true,
+    },
   }
 );
 const isDatabaseOn = async () => {
@@ -20,7 +24,5 @@ const isDatabaseOn = async () => {
   }
 };
 isDatabaseOn();
-
-// sequelize.sync({ force: true });
 
 module.exports = sequelize;

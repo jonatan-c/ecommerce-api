@@ -5,24 +5,27 @@ const ProductsDB = sequelize.define(
   "products",
   {
     id_product: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
     name_product: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     price_product: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
     },
     description_product: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     stock_product: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
     },
-    image_product: {
-      type: Sequelize.BLOB("long"),
+    // image_product: {
+    //   type: DataTypes.BLOB("long"),
+    // },
+    category_product: {
+      type: DataTypes.STRING,
     },
   },
   {
