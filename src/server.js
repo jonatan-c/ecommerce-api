@@ -11,7 +11,9 @@ db.sequelize.sync().then(() => {
   console.log("DB has been created successfully");
 });
 
-const ProductsAdminRoutes = require("./routes/productsAdmin.routes");
+const userRoutes = require("./routes/users.routes");
+const authRoutes = require("./routes/auth.routes");
+const productsAdminRoutes = require("./routes/productsAdmin.routes");
 // ********************* SWAGGER ************
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
@@ -30,6 +32,11 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 // ************************
 
-app.use("/productsAdmin", ProductsAdminRoutes);
+//********************************************* USER **********************
+app.use("/users", userRoutes);
+//********************************************* AUTH **********************
+app.use("/auth", authRoutes);
+//********************************************* PRODUCTS ADMIN **********************
+app.use("/productsAdmin", productsAdminRoutes);
 
 module.exports = app;
