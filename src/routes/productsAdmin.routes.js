@@ -30,7 +30,7 @@ module.exports = router;
  * /productsAdmin:
  *  get:
  *    tags:
- *      - Products
+ *      - Admin Products
  *    summary: list of products in the store for all users
  *    description: list of products in the store for all users
  *    parameters:
@@ -49,7 +49,7 @@ module.exports = router;
  * /productsAdmin/{id}:
  *  get:
  *    tags:
- *      - Products
+ *      - Admin Products
  *    summary: Get a product by id
  *    description: Get a product by id
  *    parameters:
@@ -73,7 +73,7 @@ module.exports = router;
  * /productsAdmin:
  *  post:
  *    tags:
- *      - Products
+ *      - Admin Products
  *    summary: Add a new product
  *    description: Add a new product
  *    parameters:
@@ -117,7 +117,7 @@ module.exports = router;
  * /productsAdmin/{id}:
  *  put:
  *    tags:
- *      - Products
+ *      - Admin Products
  *    summary: Add a new product
  *    description: Add a new product
  *    parameters:
@@ -166,7 +166,7 @@ module.exports = router;
  * /productsAdmin/{id}:
  *  delete:
  *    tags:
- *      - Products
+ *      - Admin Products
  *    summary: Delete a product by id
  *    description:  Delete a  product by id
  *    parameters:
