@@ -14,6 +14,9 @@ Existen 3 tipos de usuarios:
 
 2. Admin
    - Puede CRUD productos.
+   - Debe tener middleware que compruebe existencia de token
+   - Debe tener middleware que comprueba token de role admin
+   - Debe tener middleware que compruebe que el nombre de producto ya esta en base de datos
    - Puede CRUD categorias.
 3. User
 

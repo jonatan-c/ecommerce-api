@@ -1,6 +1,7 @@
+const { Op } = require("sequelize");
 const ProductsDB = require("../models/Products.model");
 
-const hasProduct = async (req, res, next) => {
+const hasProductInDB = async (req, res, next) => {
   const product = await ProductsDB.findAll();
   if (!product.length === 0) {
     return res.status(200).json({
@@ -21,7 +22,26 @@ const isProductInDB = async (req, res, next) => {
   next();
 };
 
+const isNameProductInDB = async (req, res, next) => {
+  // de base de datos
+  const { name_product } = req.body;
+  const result = await ProductsDB.findOne({
+    where: {
+      name_product: {
+        [Op.like]: `%${name_product}%`,
+      },
+    },
+  });
+  if (result) {
+    return res.status(200).json({
+      message: "Product already exists, change the name",
+    });
+  }
+  next();
+};
+
 module.exports = {
-  hasProduct,
+  hasProductInDB,
   isProductInDB,
+  isNameProductInDB,
 };

@@ -51,6 +51,32 @@ const isTokenSuperAdmin = (req, res, next) => {
   }
 };
 
+const isTokenAdmin = (req, res, next) => {
+  // Leer el token del header
+  const token = req.header("x-auth-token");
+  //Revisar si no hay token
+  if (token) {
+    jwt.verify(token, process.env.SECRET_TOKEN, (err, decoded) => {
+      if (err) {
+        return res.json({ mensaje: "Token inválida" });
+      } else {
+        req.decoded = decoded;
+        if (req.decoded.role == "Admin") {
+          next();
+        } else {
+          return res.json({
+            msg: "You are not Admin",
+          });
+        }
+      }
+    });
+  } else {
+    res.send({
+      mensaje: "Token no proveída.",
+    });
+  }
+};
+
 const isUserInDB = async (req, res, next) => {
   const { id } = req.params;
   const result = await usersDB.findOne({
@@ -67,4 +93,4 @@ const isUserInDB = async (req, res, next) => {
   }
 };
 
-module.exports = { hasToken, isTokenSuperAdmin, isUserInDB };
+module.exports = { hasToken, isTokenSuperAdmin, isUserInDB, isTokenAdmin };

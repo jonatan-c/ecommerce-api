@@ -2,9 +2,12 @@ const { Router } = require("express");
 const router = Router();
 
 const {
-  hasProduct,
+  hasProductInDB,
   isProductInDB,
+  isNameProductInDB,
 } = require("../middlewares/productsAdmin.middlewares");
+
+const { hasToken, isTokenAdmin } = require("../middlewares/auth.middlewares");
 
 const {
   getAllProducts,
@@ -14,11 +17,11 @@ const {
   deleteProduct,
 } = require("../controllers/productsAdmin.controller");
 
-router.get("/", hasProduct, getAllProducts);
-router.get("/:id", isProductInDB, getProductById);
-router.post("/", createProduct);
-router.put("/:id", isProductInDB, updateProduct);
-router.delete("/:id", isProductInDB, deleteProduct);
+router.get("/", hasToken, isTokenAdmin, hasProductInDB, getAllProducts);
+router.get("/:id", hasToken, isTokenAdmin, isProductInDB, getProductById);
+router.post("/", hasToken, isTokenAdmin, isNameProductInDB, createProduct);
+router.put("/:id", hasToken, isTokenAdmin, isProductInDB, updateProduct);
+router.delete("/:id", hasToken, isTokenAdmin, isProductInDB, deleteProduct);
 
 module.exports = router;
 
@@ -33,7 +36,7 @@ module.exports = router;
  *    parameters:
  *    - name : x-auth-token
  *      value :
- *      required : false
+ *      required : true
  *      dataType : string
  *      in : header
  *    responses:
@@ -52,7 +55,7 @@ module.exports = router;
  *    parameters:
  *    - name : x-auth-token
  *      value :
- *      required : false
+ *      required : true
  *      dataType : string
  *      in : header
  *    - name: id
@@ -76,7 +79,7 @@ module.exports = router;
  *    parameters:
  *    - name : x-auth-token
  *      value :
- *      required : false
+ *      required : true
  *      dataType : string
  *      in : header
  *    - name: name_product
@@ -120,7 +123,7 @@ module.exports = router;
  *    parameters:
  *    - name : x-auth-token
  *      value :
- *      required : false
+ *      required : true
  *      dataType : string
  *      in : header
  *    - name: id
@@ -169,7 +172,7 @@ module.exports = router;
  *    parameters:
  *    - name : x-auth-token
  *      value :
- *      required : false
+ *      required : true
  *      dataType : string
  *      in : header
  *    - name: id
