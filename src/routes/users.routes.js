@@ -73,7 +73,7 @@ module.exports = router;
  * /users:
  *  get:
  *    tags:
- *      - Super Admin put Role to user by id user (id_user)
+ *      - SuperAdmin Role
  *    summary: The SuperAdmin can see every users in the database.
  *    description: SuperAdmin can see every users in the database.
  *    parameters:
@@ -93,7 +93,7 @@ module.exports = router;
  * /users/{id}:
  *  get:
  *    tags:
- *      - Super Admin put Role to user by id user (id_user)
+ *      - SuperAdmin Role
  *    summary: The SuperAdmin can see every users in the database.
  *    description: SuperAdmin can see every users in the database.
  *    parameters:
@@ -118,7 +118,7 @@ module.exports = router;
  * /users/{id}:
  *  put:
  *    tags:
- *      - Super Admin put Role to user by id user (id_user)
+ *      - SuperAdmin Role
  *    summary: Edit a user role (SuperAdmin only)
  *    description: Edit a user role (SuperAdmin only)
  *    parameters:
