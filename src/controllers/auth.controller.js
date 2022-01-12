@@ -59,4 +59,27 @@ const autenticateUser = async (req, res) => {
   }
 };
 
-module.exports = { autenticateUser };
+// obtiene que usuario esta autenticado
+const getUserAutenticated = async (req, res) => {
+  const usuario = await usersDB.findOne({
+    where: { id_user: req.decoded.id_user },
+    attributes: { exclude: ["password1", "state"] },
+  });
+  res.json(usuario);
+};
+
+// const updateRole = async (req, res) => {
+//   try {
+//     const result = await usersDB.update(
+//       {
+//         state: req.body.estadoUser,
+//       },
+//       { where: { id_user: req.body.id_user } }
+//     );
+//     res.json({ message: "The user is discontinued" });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+module.exports = { autenticateUser, getUserAutenticated };

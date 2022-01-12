@@ -1,10 +1,27 @@
 const { Router } = require("express");
 const router = Router();
 
-const { createUser } = require("../controllers/users.controller");
+const {
+  createUser,
+  getAllUsers,
+  getUserById,
+  updateRole,
+} = require("../controllers/users.controller");
 const { isEmailValid } = require("../middlewares/users.middlewares");
+// const { isUserInDB } = require("../controllers/auth.controller");
+const {
+  hasToken,
+  isTokenSuperAdmin,
+  isUserInDB,
+} = require("../middlewares/auth.middlewares");
 
+// registro comun para todos los usuarios
 router.post("/register", isEmailValid, createUser);
+
+//solo el SuperAdmin puede acceder a estas 2 rutas
+router.get("/", hasToken, isTokenSuperAdmin, getAllUsers);
+router.get("/:id", hasToken, isUserInDB, isTokenSuperAdmin, getUserById);
+router.put("/:id", hasToken, isUserInDB, isTokenSuperAdmin, updateRole);
 
 module.exports = router;
 
@@ -49,4 +66,78 @@ module.exports = router;
  *      404:
  *        description: A user with the specified ID was not found
  *
+ */
+
+/**
+ * @swagger
+ * /users:
+ *  get:
+ *    tags:
+ *      - Super Admin put Role to user by id user (id_user)
+ *    summary: The SuperAdmin can see every users in the database.
+ *    description: SuperAdmin can see every users in the database.
+ *    parameters:
+ *    - name : x-auth-token
+ *      value :
+ *      required : false
+ *      dataType : string
+ *      in : header
+ *    responses:
+ *      200:
+ *        description: Success
+ *
+ */
+
+/**
+ * @swagger
+ * /users/{id}:
+ *  get:
+ *    tags:
+ *      - Super Admin put Role to user by id user (id_user)
+ *    summary: The SuperAdmin can see every users in the database.
+ *    description: SuperAdmin can see every users in the database.
+ *    parameters:
+ *    - name : x-auth-token
+ *      value :
+ *      required : false
+ *      dataType : string
+ *      in : header
+ *    - name: id
+ *      description: id of the character
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ *
+ */
+
+/**
+ * @swagger
+ * /users/{id}:
+ *  put:
+ *    tags:
+ *      - Super Admin put Role to user by id user (id_user)
+ *    summary: Edit a user role (SuperAdmin only)
+ *    description: Edit a user role (SuperAdmin only)
+ *    parameters:
+ *    - name : x-auth-token
+ *      value :
+ *      required : false
+ *      dataType : string
+ *      in : header
+ *    - name: id
+ *      description: id of the product
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    - name: role
+ *      description: name of the product
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
  */

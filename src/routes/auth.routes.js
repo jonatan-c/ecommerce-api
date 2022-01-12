@@ -1,11 +1,17 @@
 const { Router } = require("express");
 const router = Router();
 
-const { autenticateUser } = require("../controllers/auth.controller");
+const {
+  autenticateUser,
+  getUserAutenticated,
+} = require("../controllers/auth.controller");
 
+const { hasToken } = require("../middlewares/auth.middlewares");
+
+// login
 router.post("/", autenticateUser);
-
-router.get("/");
+// obtiene que usuario esta autenticado
+router.get("/", hasToken, getUserAutenticated);
 
 module.exports = router;
 
