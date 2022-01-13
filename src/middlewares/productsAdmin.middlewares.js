@@ -15,7 +15,7 @@ const isProductInDB = async (req, res, next) => {
   const { id } = req.params;
   const result = await ProductsDB.findByPk(id);
   if (!result) {
-    return res.status(200).json({
+    return res.status(404).json({
       message: "Product not found, please check the id",
     });
   }

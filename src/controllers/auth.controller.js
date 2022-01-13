@@ -10,13 +10,13 @@ const autenticateUser = async (req, res) => {
       where: { email },
     });
     if (!user) {
-      return res.status(400).json({
+      return res.status(404).json({
         message: "User not found",
       });
     }
     const correctPassword = await bcryptjs.compare(password1, user.password1);
     if (!correctPassword) {
-      return res.status(400).json({
+      return res.status(404).json({
         message: "Incorrect password",
       });
     }
@@ -52,7 +52,7 @@ const autenticateUser = async (req, res) => {
       }
     );
   } catch (error) {
-    res.status(500).json({
+    res.status(400).json({
       message: "Error autenticating user",
       error,
     });

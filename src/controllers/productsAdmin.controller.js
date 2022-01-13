@@ -5,6 +5,7 @@ async function getAllProducts(req, res) {
     const products = await ProductsDB.findAll();
     res.json(products);
   } catch (error) {
+    res.status(500).json(error);
     console.log(error);
   }
 }
@@ -14,6 +15,7 @@ async function getProductById(req, res) {
     const product = await ProductsDB.findByPk(req.params.id);
     res.status(200).json(product);
   } catch (error) {
+    res.status(500).json(error);
     console.log(error);
   }
 }
@@ -31,6 +33,7 @@ async function createProduct(req, res) {
 
     res.status(201).json("Product created");
   } catch (error) {
+    res.status(500).json(error);
     console.log(error);
   }
 }
@@ -54,6 +57,7 @@ async function updateProduct(req, res) {
     );
     res.status(200).json("Product updated");
   } catch (error) {
+    res.status(500).json(error);
     console.log(error);
   }
 }
@@ -67,6 +71,7 @@ async function deleteProduct(req, res) {
     });
     res.status(200).json("Product deleted");
   } catch (error) {
+    res.status(500).json(error);
     console.log(error);
   }
 }

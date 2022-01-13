@@ -9,13 +9,13 @@ const isEmailValid = async (req, res, next) => {
       },
     });
     if (user) {
-      return res.status(400).json({
+      return res.status(200).json({
         message: "Email already in use",
       });
     }
     next();
   } catch (error) {
-    res.status(500).json({
+    res.status(404).json({
       message: "Error validating email",
       error,
     });

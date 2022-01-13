@@ -32,20 +32,20 @@ const isTokenSuperAdmin = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.SECRET_TOKEN, (err, decoded) => {
       if (err) {
-        return res.json({ mensaje: "Token inválida" });
+        return res.status(404).json({ mensaje: "Token inválida" });
       } else {
         req.decoded = decoded;
         if (req.decoded.role == "SuperAdmin") {
           next();
         } else {
-          return res.json({
+          return res.status(403).json({
             msg: "You are not SuperAdmin",
           });
         }
       }
     });
   } else {
-    res.send({
+    res.status(400).send({
       mensaje: "Token no proveída.",
     });
   }
@@ -58,20 +58,20 @@ const isTokenAdmin = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.SECRET_TOKEN, (err, decoded) => {
       if (err) {
-        return res.json({ mensaje: "Token inválida" });
+        return res.status(404).json({ mensaje: "Token inválida" });
       } else {
         req.decoded = decoded;
         if (req.decoded.role == "Admin") {
           next();
         } else {
-          return res.json({
+          return res.status(403).json({
             msg: "You are not Admin",
           });
         }
       }
     });
   } else {
-    res.send({
+    res.status(400).send({
       mensaje: "Token no proveída.",
     });
   }
@@ -87,7 +87,7 @@ const isUserInDB = async (req, res, next) => {
   if (result) {
     next();
   } else {
-    res.send({
+    res.status(404).send({
       mensaje: "The user does not exist",
     });
   }
