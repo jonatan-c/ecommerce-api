@@ -14,6 +14,7 @@ db.sequelize.sync().then(() => {
 const userRoutes = require("./routes/users.routes");
 const authRoutes = require("./routes/auth.routes");
 const productsAdminRoutes = require("./routes/productsAdmin.routes");
+const categoriesAdminRoutes = require("./routes/productsAdmin.routes");
 // ********************* SWAGGER ************
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
@@ -38,5 +39,6 @@ app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 //********************************************* PRODUCTS ADMIN **********************
 app.use("/productsAdmin", productsAdminRoutes);
+app.use("/categoriesAdmin", categoriesAdminRoutes);
 
 module.exports = app;
