@@ -67,4 +67,26 @@ async function editCategory(req, res) {
   }
 }
 
-module.exports = { getCategories, createCategory, getCategory, editCategory };
+async function deleteCategory(req, res) {
+  try {
+    const { id } = req.params;
+    const category = await CategoryDB.destroy({
+      where: {
+        id_category: id,
+      },
+    });
+    res.status(200).json({ message: "Categoria eliminada con exito" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al eliminar la categoria",
+      error,
+    });
+  }
+}
+module.exports = {
+  getCategories,
+  createCategory,
+  getCategory,
+  editCategory,
+  deleteCategory,
+};

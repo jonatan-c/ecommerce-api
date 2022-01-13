@@ -14,13 +14,14 @@ const {
   createCategory,
   getCategory,
   editCategory,
+  deleteCategory,
 } = require("../controllers/categoriesAdmin.controller");
 
 router.get("/", hasToken, isTokenAdmin, existCategoriesInDB, getCategories);
 router.post("/", hasToken, isTokenAdmin, isNameCategoryInDB, createCategory);
 router.get("/:id", hasToken, isTokenAdmin, isCategoryIdInDB, getCategory);
 router.put("/:id", hasToken, isTokenAdmin, isCategoryIdInDB, editCategory);
-router.delete("/:id", hasToken, isTokenAdmin);
+router.delete("/:id", hasToken, isTokenAdmin, isCategoryIdInDB, deleteCategory);
 
 module.exports = router;
 
@@ -122,10 +123,10 @@ module.exports = router;
 
 /**
  * @swagger
- * /productsAdmin/{id}:
+ * /categoriesAdmin/{id}:
  *  delete:
  *    tags:
- *      - Admin Products
+ *      - Admin categories
  *    summary: Delete a product by id
  *    description:  Delete a  product by id
  *    parameters:
@@ -135,7 +136,7 @@ module.exports = router;
  *      dataType : string
  *      in : header
  *    - name: id
- *      description: id of the product
+ *      description: id of the category
  *      in: path
  *      required: true
  *      type: integer
