@@ -6,16 +6,18 @@ const { hasToken, isTokenAdmin } = require("../middlewares/auth.middlewares");
 const {
   existCategoriesInDB,
   isNameCategoryInDB,
+  isCategoryIdInDB,
 } = require("../middlewares/categoriesAdmin.middlewares");
 // controller
 const {
   getCategories,
   createCategory,
+  getCategory,
 } = require("../controllers/categoriesAdmin.controller");
 
 router.get("/", hasToken, isTokenAdmin, existCategoriesInDB, getCategories);
 router.post("/", hasToken, isTokenAdmin, isNameCategoryInDB, createCategory);
-router.get("/:id", hasToken, isTokenAdmin);
+router.get("/:id", hasToken, isTokenAdmin, isCategoryIdInDB, getCategory);
 router.put("/:id", hasToken, isTokenAdmin);
 router.delete("/:id", hasToken, isTokenAdmin);
 

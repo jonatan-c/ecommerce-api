@@ -27,4 +27,21 @@ async function createCategory(req, res) {
   }
 }
 
-module.exports = { getCategories, createCategory };
+async function getCategory(req, res) {
+  try {
+    const { id } = req.params;
+    const category = await CategoryDB.findOne({
+      where: {
+        id_category: id,
+      },
+    });
+    res.status(200).json(category);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al obtener la categoria",
+      error,
+    });
+  }
+}
+
+module.exports = { getCategories, createCategory, getCategory };

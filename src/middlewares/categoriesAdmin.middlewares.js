@@ -29,4 +29,20 @@ async function isNameCategoryInDB(req, res, next) {
   next();
 }
 
-module.exports = { existCategoriesInDB, isNameCategoryInDB };
+async function isCategoryIdInDB(req, res, next) {
+  const { id } = req.params;
+  const category = await CategoryDB.findOne({
+    where: {
+      id_category: id,
+    },
+  });
+
+  if (!category) {
+    return res.status(404).json({
+      message: "La categoria no existe en la base de datos",
+    });
+  }
+  next();
+}
+
+module.exports = { existCategoriesInDB, isNameCategoryInDB, isCategoryIdInDB };
