@@ -44,4 +44,27 @@ async function getCategory(req, res) {
   }
 }
 
-module.exports = { getCategories, createCategory, getCategory };
+async function editCategory(req, res) {
+  try {
+    const { id } = req.params;
+    const { name_category } = req.body;
+    const category = await CategoryDB.update(
+      {
+        name_category,
+      },
+      {
+        where: {
+          id_category: id,
+        },
+      }
+    );
+    res.status(200).json({ message: "Categoria editada con exito" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al editar la categoria",
+      error,
+    });
+  }
+}
+
+module.exports = { getCategories, createCategory, getCategory, editCategory };

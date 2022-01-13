@@ -13,12 +13,13 @@ const {
   getCategories,
   createCategory,
   getCategory,
+  editCategory,
 } = require("../controllers/categoriesAdmin.controller");
 
 router.get("/", hasToken, isTokenAdmin, existCategoriesInDB, getCategories);
 router.post("/", hasToken, isTokenAdmin, isNameCategoryInDB, createCategory);
 router.get("/:id", hasToken, isTokenAdmin, isCategoryIdInDB, getCategory);
-router.put("/:id", hasToken, isTokenAdmin);
+router.put("/:id", hasToken, isTokenAdmin, isCategoryIdInDB, editCategory);
 router.delete("/:id", hasToken, isTokenAdmin);
 
 module.exports = router;
@@ -92,12 +93,12 @@ module.exports = router;
 
 /**
  * @swagger
- * /productsAdmin/{id}:
+ * /categoriesAdmin/{id}:
  *  put:
  *    tags:
- *      - Admin Products
- *    summary: Add a new product
- *    description: Add a new product
+ *      - Admin categories
+ *    summary: Edit a category
+ *    description: Edit a category
  *    parameters:
  *    - name : x-auth-token
  *      value :
@@ -105,32 +106,12 @@ module.exports = router;
  *      dataType : string
  *      in : header
  *    - name: id
- *      description: id of the product
+ *      description: id of the category
  *      in: path
  *      required: true
  *      type: integer
- *    - name: name_product
- *      description: name of the product
- *      in: formData
- *      required: true
- *      type: string
- *    - name : price_product
- *      description: price of the product
- *      in: formData
- *      required: true
- *      type: integer
- *    - name : description_product
- *      description:  description of the product
- *      in: formData
- *      required: true
- *      type: string
- *    - name : stock_product
- *      description: stock of the product
- *      in: formData
- *      required: true
- *      type: integer
- *    - name : category_product
- *      description: category of the product
+ *    - name: name_category
+ *      description: name of the category
  *      in: formData
  *      required: true
  *      type: string
