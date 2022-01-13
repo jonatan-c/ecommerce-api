@@ -1,4 +1,5 @@
-const CategoryDB = require("../models/category.model");
+const { Op } = require("sequelize");
+const CategoryDB = require("../models/Categories.model");
 
 async function existCategoriesInDB(req, res, next) {
   const categories = await CategoryDB.findAll();
@@ -10,4 +11,22 @@ async function existCategoriesInDB(req, res, next) {
   next();
 }
 
-module.exports = { existCategoriesInDB };
+async function isNameCategoryInDB(req, res, next) {
+  const { name_category } = req.body;
+  const category = await CategoryDB.findOne({
+    where: {
+      name_category: {
+        [Op.eq]: name_category,
+      },
+    },
+  });
+
+  if (category) {
+    return res.status(400).json({
+      message: "La categoria ya existe en la base de datos",
+    });
+  }
+  next();
+}
+
+module.exports = { existCategoriesInDB, isNameCategoryInDB };

@@ -14,8 +14,10 @@ db.sequelize.sync().then(() => {
 const userRoutes = require("./routes/users.routes");
 const authRoutes = require("./routes/auth.routes");
 const productsAdminRoutes = require("./routes/productsAdmin.routes");
-const categoriesAdminRoutes = require("./routes/productsAdmin.routes");
+const categoriesAdminRoutes = require("./routes/categoriesAdmin.routes");
+
 // ********************* SWAGGER ************
+
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 

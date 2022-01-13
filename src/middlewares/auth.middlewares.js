@@ -10,7 +10,7 @@ const hasToken = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.SECRET_TOKEN, (err, decoded) => {
       if (err) {
-        return res.json({ mensaje: "Token inválida" });
+        return res.status(404).json({ mensaje: "Token inválida" });
       } else {
         req.decoded = decoded;
         console.log(req.decoded);
@@ -18,7 +18,7 @@ const hasToken = (req, res, next) => {
       }
     });
   } else {
-    res.send({
+    res.status(4043).send({
       mensaje: "Token no proveída.",
     });
   }
@@ -45,7 +45,7 @@ const isTokenSuperAdmin = (req, res, next) => {
       }
     });
   } else {
-    res.status(400).send({
+    res.status(403).send({
       mensaje: "Token no proveída.",
     });
   }
@@ -58,7 +58,7 @@ const isTokenAdmin = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.SECRET_TOKEN, (err, decoded) => {
       if (err) {
-        return res.status(404).json({ mensaje: "Token inválida" });
+        return res.status(403).json({ mensaje: "Token inválida" });
       } else {
         req.decoded = decoded;
         if (req.decoded.role == "Admin") {
@@ -71,7 +71,7 @@ const isTokenAdmin = (req, res, next) => {
       }
     });
   } else {
-    res.status(400).send({
+    res.status(403).send({
       mensaje: "Token no proveída.",
     });
   }
