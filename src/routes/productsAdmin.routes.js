@@ -5,6 +5,7 @@ const {
   hasProductInDB,
   isProductInDB,
   isNameProductInDB,
+  isCategoryIdDB,
 } = require("../middlewares/productsAdmin.middlewares");
 
 const { hasToken, isTokenAdmin } = require("../middlewares/auth.middlewares");
@@ -19,8 +20,22 @@ const {
 
 router.get("/", hasToken, isTokenAdmin, hasProductInDB, getAllProducts);
 router.get("/:id", hasToken, isTokenAdmin, isProductInDB, getProductById);
-router.post("/", hasToken, isTokenAdmin, isNameProductInDB, createProduct);
-router.put("/:id", hasToken, isTokenAdmin, isProductInDB, updateProduct);
+router.post(
+  "/",
+  hasToken,
+  isTokenAdmin,
+  isNameProductInDB,
+  isCategoryIdDB,
+  createProduct
+);
+router.put(
+  "/:id",
+  hasToken,
+  isTokenAdmin,
+  isProductInDB,
+  isCategoryIdDB,
+  updateProduct
+);
 router.delete("/:id", hasToken, isTokenAdmin, isProductInDB, deleteProduct);
 
 module.exports = router;
@@ -102,11 +117,11 @@ module.exports = router;
  *      in: formData
  *      required: true
  *      type: integer
- *    - name : category_product
+ *    - name : id_category
  *      description: category of the product
  *      in: formData
  *      required: true
- *      type: string
+ *      type: integer
  *    responses:
  *      200:
  *        description: Success
@@ -151,11 +166,11 @@ module.exports = router;
  *      in: formData
  *      required: true
  *      type: integer
- *    - name : category_product
+ *    - name : id_category
  *      description: category of the product
  *      in: formData
  *      required: true
- *      type: string
+ *      type: integer
  *    responses:
  *      200:
  *        description: Success

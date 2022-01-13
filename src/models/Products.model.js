@@ -21,12 +21,6 @@ const ProductsDB = sequelize.define(
     stock_product: {
       type: DataTypes.INTEGER,
     },
-    // image_product: {
-    //   type: DataTypes.BLOB("long"),
-    // },
-    category_product: {
-      type: DataTypes.STRING,
-    },
   },
   {
     timestamps: false,

@@ -2,7 +2,9 @@ const ProductsDB = require("../models/Products.model");
 
 async function getAllProducts(req, res) {
   try {
-    const products = await ProductsDB.findAll();
+    const products = await ProductsDB.findAll({
+      include: ["category"],
+    });
     res.json(products);
   } catch (error) {
     res.status(500).json(error);
@@ -12,7 +14,10 @@ async function getAllProducts(req, res) {
 
 async function getProductById(req, res) {
   try {
-    const product = await ProductsDB.findByPk(req.params.id);
+    const product = await ProductsDB.findByPk(req.params.id, {
+      include: ["category"],
+    });
+
     res.status(200).json(product);
   } catch (error) {
     res.status(500).json(error);
@@ -27,8 +32,7 @@ async function createProduct(req, res) {
       price_product: req.body.price_product,
       description_product: req.body.description_product,
       stock_product: req.body.stock_product,
-      // image_product: req.body.image_product,
-      category_product: req.body.category_product,
+      id_category: parseInt(req.body.id_category),
     });
 
     res.status(201).json("Product created");
@@ -46,8 +50,7 @@ async function updateProduct(req, res) {
         price_product: req.body.price_product,
         description_product: req.body.description_product,
         stock_product: req.body.stock_product,
-        // image_product: req.body.image_product,
-        category_product: req.body.category_product,
+        id_category: parseInt(req.body.id_category),
       },
       {
         where: {

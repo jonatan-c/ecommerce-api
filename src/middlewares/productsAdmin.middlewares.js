@@ -1,5 +1,6 @@
 const { Op } = require("sequelize");
 const ProductsDB = require("../models/Products.model");
+const CategoryDB = require("../models/Categories.model");
 
 const hasProductInDB = async (req, res, next) => {
   const product = await ProductsDB.findAll();
@@ -40,8 +41,20 @@ const isNameProductInDB = async (req, res, next) => {
   next();
 };
 
+async function isCategoryIdDB(req, res, next) {
+  const { id_category } = req.body;
+  const result = await CategoryDB.findByPk(id_category);
+  if (!result) {
+    return res.status(404).json({
+      message: "Category not found, please check the id",
+    });
+  }
+  next();
+}
+
 module.exports = {
   hasProductInDB,
   isProductInDB,
   isNameProductInDB,
+  isCategoryIdDB,
 };
