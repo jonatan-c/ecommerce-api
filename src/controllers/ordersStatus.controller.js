@@ -25,4 +25,21 @@ async function getOrderStatus(req, res) {
   }
 }
 
-module.exports = { getOrdersStatus, getOrderStatus };
+async function createOrderStatus(req, res) {
+  try {
+    const { name } = req.body;
+    const orderStatus = await OrdersStatusDB.create({
+      name,
+    });
+    res
+      .status(201)
+      .json({ message: "Order Status created successfully", orderStatus });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al crear el estado de pedido",
+      error,
+    });
+  }
+}
+
+module.exports = { getOrdersStatus, getOrderStatus, createOrderStatus };

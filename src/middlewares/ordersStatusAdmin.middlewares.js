@@ -20,4 +20,22 @@ async function isIdOrderStatusInDB(req, res, next) {
   }
   next();
 }
-module.exports = { existOrdersStatusInDB, isIdOrderStatusInDB };
+
+async function existNameOrderStatusInDB(req, res, next) {
+  const { name } = req.body;
+  const ordersStatus = await OrdersStatusDB.findOne({
+    where: { name },
+  });
+  if (ordersStatus) {
+    return res.status(200).json({
+      message: "El estado de pedido ya existe en la base de datos",
+    });
+  }
+  next();
+}
+
+module.exports = {
+  existOrdersStatusInDB,
+  isIdOrderStatusInDB,
+  existNameOrderStatusInDB,
+};

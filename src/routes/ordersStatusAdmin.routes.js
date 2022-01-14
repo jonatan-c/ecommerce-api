@@ -6,10 +6,12 @@ const { hasToken, isTokenAdmin } = require("../middlewares/auth.middlewares");
 const {
   getOrdersStatus,
   getOrderStatus,
+  createOrderStatus,
 } = require("../controllers/ordersStatus.controller");
 const {
   existOrdersStatusInDB,
   isIdOrderStatusInDB,
+  existNameOrderStatusInDB,
 } = require("../middlewares/ordersStatusAdmin.middlewares");
 
 router.get("/", hasToken, isTokenAdmin, existOrdersStatusInDB, getOrdersStatus);
@@ -21,7 +23,13 @@ router.get(
   isIdOrderStatusInDB,
   getOrderStatus
 );
-router.post("/");
+router.post(
+  "/",
+  hasToken,
+  isTokenAdmin,
+  existNameOrderStatusInDB,
+  createOrderStatus
+);
 router.put("/:id");
 router.delete("/:id");
 
@@ -65,6 +73,30 @@ module.exports = router;
  *      in: path
  *      required: true
  *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ */
+
+/**
+ * @swagger
+ * /ordersStatusAdmin:
+ *  post:
+ *    tags:
+ *      - Admin Orders Status
+ *    summary: Add a new order status
+ *    description: Add a new order status
+ *    parameters:
+ *    - name : x-auth-token
+ *      value :
+ *      required : true
+ *      dataType : string
+ *      in : header
+ *    - name: name
+ *      description: name of the order status
+ *      in: formData
+ *      required: true
+ *      type: string
  *    responses:
  *      200:
  *        description: Success
