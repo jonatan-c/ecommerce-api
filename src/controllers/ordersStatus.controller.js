@@ -42,4 +42,32 @@ async function createOrderStatus(req, res) {
   }
 }
 
-module.exports = { getOrdersStatus, getOrderStatus, createOrderStatus };
+async function editOrderStatus(req, res) {
+  try {
+    const orderStatus = await OrdersStatusDB.update(
+      {
+        name: req.body.name,
+      },
+      {
+        where: {
+          id_order_status: req.params.id,
+        },
+      }
+    );
+    res.status(200).json({
+      message: "Order Status updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al actualizar el estado de pedido",
+      error,
+    });
+  }
+}
+
+module.exports = {
+  getOrdersStatus,
+  getOrderStatus,
+  createOrderStatus,
+  editOrderStatus,
+};
