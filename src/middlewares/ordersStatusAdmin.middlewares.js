@@ -10,4 +10,14 @@ async function existOrdersStatusInDB(req, res, next) {
   next();
 }
 
-module.exports = { existOrdersStatusInDB };
+async function isIdOrderStatusInDB(req, res, next) {
+  const { id } = req.params;
+  const ordersStatus = await OrdersStatusDB.findByPk(id);
+  if (!ordersStatus) {
+    return res.status(404).json({
+      message: "No existe el estado de pedido en la base de datos",
+    });
+  }
+  next();
+}
+module.exports = { existOrdersStatusInDB, isIdOrderStatusInDB };

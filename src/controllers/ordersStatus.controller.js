@@ -12,4 +12,17 @@ async function getOrdersStatus(req, res) {
   }
 }
 
-module.exports = { getOrdersStatus };
+async function getOrderStatus(req, res) {
+  try {
+    const { id } = req.params;
+    const orderStatus = await OrdersStatusDB.findByPk(id);
+    res.status(200).json(orderStatus);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al obtener el estado de pedido",
+      error,
+    });
+  }
+}
+
+module.exports = { getOrdersStatus, getOrderStatus };
