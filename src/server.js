@@ -15,6 +15,7 @@ const userRoutes = require("./routes/users.routes");
 const authRoutes = require("./routes/auth.routes");
 const productsAdminRoutes = require("./routes/productsAdmin.routes");
 const categoriesAdminRoutes = require("./routes/categoriesAdmin.routes");
+const ordersStatusAdminRoutes = require("./routes/ordersStatusAdmin.routes");
 
 // ********************* SWAGGER ************
 
@@ -42,5 +43,6 @@ app.use("/auth", authRoutes);
 //********************************************* PRODUCTS ADMIN **********************
 app.use("/productsAdmin", productsAdminRoutes);
 app.use("/categoriesAdmin", categoriesAdminRoutes);
+app.use("/ordersStatusAdmin", ordersStatusAdminRoutes);
 
 module.exports = app;

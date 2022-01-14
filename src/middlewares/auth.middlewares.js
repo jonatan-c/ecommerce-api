@@ -18,7 +18,7 @@ const hasToken = (req, res, next) => {
       }
     });
   } else {
-    res.status(4043).send({
+    res.status(404).send({
       mensaje: "Token no proveída.",
     });
   }
