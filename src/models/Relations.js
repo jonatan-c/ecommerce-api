@@ -20,4 +20,6 @@ db.productsDB.belongsTo(db.categoriesDB, {
   foreignKey: "id_category",
 });
 
+//************** Relaciones One-To-Many ; 1 PM puede tener muchas Ordenes
+
 module.exports = db;
