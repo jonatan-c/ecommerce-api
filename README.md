@@ -1,5 +1,9 @@
 ## Api de una tienda ecommerce
 
+Puede ver el trello aqui:
+
+[Trello](https://trello.com/b/sTSXIfQZ/backlog)
+
 <details>
 <summary>PARA NO DESARROLLADORES  </summary>
 <br>
