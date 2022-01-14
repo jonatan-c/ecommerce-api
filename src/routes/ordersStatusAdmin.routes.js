@@ -8,6 +8,7 @@ const {
   getOrderStatus,
   createOrderStatus,
   editOrderStatus,
+  deleteOrderStatus,
 } = require("../controllers/ordersStatus.controller");
 const {
   existOrdersStatusInDB,
@@ -39,7 +40,14 @@ router.put(
   isIdOrderStatusInDB,
   editOrderStatus
 );
-router.delete("/:id");
+router.delete(
+  "/:id",
+  hasToken,
+  isTokenAdmin,
+  existOrdersStatusInDB,
+  isIdOrderStatusInDB,
+  deleteOrderStatus
+);
 
 module.exports = router;
 
@@ -134,6 +142,30 @@ module.exports = router;
  *      in: formData
  *      required: true
  *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
+ */
+
+/**
+ * @swagger
+ * /ordersStatusAdmin/{id}:
+ *  delete:
+ *    tags:
+ *      - Admin Orders Status
+ *    summary: Delete a order status by id
+ *    description:  Delete a order status by id
+ *    parameters:
+ *    - name : x-auth-token
+ *      value :
+ *      required : true
+ *      dataType : string
+ *      in : header
+ *    - name: id
+ *      description: id of the order status
+ *      in: path
+ *      required: true
+ *      type: integer
  *    responses:
  *      200:
  *        description: Success

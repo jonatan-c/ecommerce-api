@@ -65,9 +65,29 @@ async function editOrderStatus(req, res) {
   }
 }
 
+async function deleteOrderStatus(req, res) {
+  try {
+    const { id } = req.params;
+    const orderStatus = await OrdersStatusDB.destroy({
+      where: {
+        id_order_status: id,
+      },
+    });
+    res.status(200).json({
+      message: "Order Status deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al eliminar el estado de pedido",
+      error,
+    });
+  }
+}
+
 module.exports = {
   getOrdersStatus,
   getOrderStatus,
   createOrderStatus,
   editOrderStatus,
+  deleteOrderStatus,
 };
