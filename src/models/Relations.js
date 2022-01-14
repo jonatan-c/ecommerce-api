@@ -9,6 +9,9 @@ db.Sequelize = Sequelize;
 db.productsDB = require("./Products.model");
 db.usersDB = require("./Users.model");
 db.categoriesDB = require("./Categories.model");
+// db.ordersStatus= require("./OrdersStatus.model");
+db.addressDB = require("./Address.model");
+db.tableManyManyAddressUsersDB = require("./TableManyManyAddressUsers.model");
 
 //************** Relaciones One-To-Many ; 1 categoria puede tener muchas productos. Ej: intel y razer ambos son categorias procesador.
 db.categoriesDB.hasMany(db.productsDB, {
@@ -20,6 +23,16 @@ db.productsDB.belongsTo(db.categoriesDB, {
   foreignKey: "id_category",
 });
 
-//************** Relaciones One-To-Many ; 1 PM puede tener muchas Ordenes
+//************** Relaciones Many-To-Many ; muchas direcciones pueden tener muchos usuarios. Ej: user 1 puede tener caller 1, calle 2 , calle 3 y El usuario 2 puede tener calle 1 y calle 54.
+db.addressDB.belongsToMany(db.usersDB, {
+  as: "users",
+  through: { model: db.tableManyManyAddressUsersDB, unique: false },
+  foreignKey: "id_address",
+});
+db.usersDB.belongsToMany(db.addressDB, {
+  as: "addresses",
+  through: { model: db.tableManyManyAddressUsersDB, unique: false },
+  foreignKey: "id_user",
+});
 
 module.exports = db;
