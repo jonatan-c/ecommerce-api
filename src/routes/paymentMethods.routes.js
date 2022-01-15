@@ -4,6 +4,7 @@ const {
   createPaymentMethod,
   getPaymentMethodById,
   editPaymentMethod,
+  deletePaymentMethod,
 } = require("../controllers/paymentMethods.controller");
 const { hasToken, isTokenAdmin } = require("../middlewares/auth.middlewares");
 const {
@@ -41,7 +42,13 @@ router.put(
   isIdPaymentMethodInDB,
   editPaymentMethod
 );
-router.delete("/:id");
+router.delete(
+  "/:id",
+  hasToken,
+  isTokenAdmin,
+  isIdPaymentMethodInDB,
+  deletePaymentMethod
+);
 
 module.exports = router;
 
@@ -147,8 +154,8 @@ module.exports = router;
  *  delete:
  *    tags:
  *      - Admin PaymentMethods
- *    summary: Delete a product by id
- *    description:  Delete a  product by id
+ *    summary: Delete a payment method by id
+ *    description:  Delete a payment method by id
  *    parameters:
  *    - name : x-auth-token
  *      value :
@@ -156,7 +163,7 @@ module.exports = router;
  *      dataType : string
  *      in : header
  *    - name: id
- *      description: id of the product
+ *      description: id of the payment method
  *      in: path
  *      required: true
  *      type: integer

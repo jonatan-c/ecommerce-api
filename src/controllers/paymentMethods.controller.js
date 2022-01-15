@@ -67,9 +67,27 @@ async function editPaymentMethod(req, res) {
   }
 }
 
+async function deletePaymentMethod(req, res) {
+  try {
+    const { id } = req.params;
+    const paymentMethod = await PaymentMethodsDB.destroy({
+      where: {
+        id_payment_method: id,
+      },
+    });
+    res.status(200).json({ message: "Metodo de pago eliminado" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al eliminar el metodo de pago",
+      error,
+    });
+  }
+}
+
 module.exports = {
   getAllPaymentMethods,
   createPaymentMethod,
   getPaymentMethodById,
   editPaymentMethod,
+  deletePaymentMethod,
 };
