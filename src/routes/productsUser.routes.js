@@ -1,9 +1,13 @@
 const { Router } = require("express");
 const { getAllProducts } = require("../controllers/productsAdmin.controller");
-const { hasToken, isTokenUser } = require("../middlewares/auth.middlewares");
+const {
+  hasToken,
+  isTokenUser,
+  isUserAnyoneOnline,
+} = require("../middlewares/auth.middlewares");
 const router = Router();
 
-router.get("/", hasToken, isTokenUser, getAllProducts);
+router.get("/", hasToken, isTokenUser, isUserAnyoneOnline, getAllProducts);
 
 module.exports = router;
 

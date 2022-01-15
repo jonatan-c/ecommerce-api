@@ -6,7 +6,11 @@ const {
   editPaymentMethod,
   deletePaymentMethod,
 } = require("../controllers/paymentMethods.controller");
-const { hasToken, isTokenAdmin } = require("../middlewares/auth.middlewares");
+const {
+  hasToken,
+  isTokenAdmin,
+  isUserAnyoneOnline,
+} = require("../middlewares/auth.middlewares");
 const {
   hasPaymentMethodsInDB,
   isNamePaymentMethodsInDB,
@@ -18,6 +22,7 @@ router.get(
   "/",
   hasToken,
   isTokenAdmin,
+  isUserAnyoneOnline,
   hasPaymentMethodsInDB,
   getAllPaymentMethods
 );
@@ -25,6 +30,7 @@ router.post(
   "/",
   hasToken,
   isTokenAdmin,
+  isUserAnyoneOnline,
   isNamePaymentMethodsInDB,
   createPaymentMethod
 );
@@ -32,6 +38,7 @@ router.get(
   "/:id",
   hasToken,
   isTokenAdmin,
+  isUserAnyoneOnline,
   isIdPaymentMethodInDB,
   getPaymentMethodById
 );
@@ -39,6 +46,7 @@ router.put(
   "/:id",
   hasToken,
   isTokenAdmin,
+  isUserAnyoneOnline,
   isIdPaymentMethodInDB,
   editPaymentMethod
 );
@@ -46,6 +54,7 @@ router.delete(
   "/:id",
   hasToken,
   isTokenAdmin,
+  isUserAnyoneOnline,
   isIdPaymentMethodInDB,
   deletePaymentMethod
 );

@@ -8,7 +8,11 @@ const {
   isCategoryIdDB,
 } = require("../middlewares/productsAdmin.middlewares");
 
-const { hasToken, isTokenAdmin } = require("../middlewares/auth.middlewares");
+const {
+  hasToken,
+  isTokenAdmin,
+  isUserAnyoneOnline,
+} = require("../middlewares/auth.middlewares");
 
 const {
   getAllProducts,
@@ -18,12 +22,27 @@ const {
   deleteProduct,
 } = require("../controllers/productsAdmin.controller");
 
-router.get("/", hasToken, isTokenAdmin, hasProductInDB, getAllProducts);
-router.get("/:id", hasToken, isTokenAdmin, isProductInDB, getProductById);
+router.get(
+  "/",
+  hasToken,
+  isTokenAdmin,
+  isUserAnyoneOnline,
+  hasProductInDB,
+  getAllProducts
+);
+router.get(
+  "/:id",
+  hasToken,
+  isTokenAdmin,
+  isUserAnyoneOnline,
+  isProductInDB,
+  getProductById
+);
 router.post(
   "/",
   hasToken,
   isTokenAdmin,
+  isUserAnyoneOnline,
   isNameProductInDB,
   isCategoryIdDB,
   createProduct
@@ -32,11 +51,19 @@ router.put(
   "/:id",
   hasToken,
   isTokenAdmin,
+  isUserAnyoneOnline,
   isProductInDB,
   isCategoryIdDB,
   updateProduct
 );
-router.delete("/:id", hasToken, isTokenAdmin, isProductInDB, deleteProduct);
+router.delete(
+  "/:id",
+  hasToken,
+  isTokenAdmin,
+  isUserAnyoneOnline,
+  isProductInDB,
+  deleteProduct
+);
 
 module.exports = router;
 

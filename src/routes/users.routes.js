@@ -13,15 +13,30 @@ const {
   hasToken,
   isTokenSuperAdmin,
   isUserInDB,
+  isUserAnyoneOnline,
 } = require("../middlewares/auth.middlewares");
 
 // registro comun para todos los usuarios
 router.post("/register", isEmailValid, createUser);
 
 //solo el SuperAdmin puede acceder a estas 2 rutas
-router.get("/", hasToken, isTokenSuperAdmin, getAllUsers);
-router.get("/:id", hasToken, isUserInDB, isTokenSuperAdmin, getUserById);
-router.put("/:id", hasToken, isUserInDB, isTokenSuperAdmin, updateRole);
+router.get("/", hasToken, isTokenSuperAdmin, isUserAnyoneOnline, getAllUsers);
+router.get(
+  "/:id",
+  hasToken,
+  isUserInDB,
+  isTokenSuperAdmin,
+  isUserAnyoneOnline,
+  getUserById
+);
+router.put(
+  "/:id",
+  hasToken,
+  isUserInDB,
+  isTokenSuperAdmin,
+  isUserAnyoneOnline,
+  updateRole
+);
 
 module.exports = router;
 
