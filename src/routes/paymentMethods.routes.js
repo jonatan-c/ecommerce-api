@@ -2,11 +2,13 @@ const { Router } = require("express");
 const {
   getAllPaymentMethods,
   createPaymentMethod,
+  getPaymentMethodById,
 } = require("../controllers/paymentMethods.controller");
 const { hasToken, isTokenAdmin } = require("../middlewares/auth.middlewares");
 const {
   hasPaymentMethodsInDB,
   isNamePaymentMethodsInDB,
+  isIdPaymentMethodInDB,
 } = require("../middlewares/paymentMethods.middlewares");
 const router = Router();
 
@@ -24,7 +26,13 @@ router.post(
   isNamePaymentMethodsInDB,
   createPaymentMethod
 );
-router.get("/:id");
+router.get(
+  "/:id",
+  hasToken,
+  isTokenAdmin,
+  isIdPaymentMethodInDB,
+  getPaymentMethodById
+);
 router.put("/:id");
 router.delete("/:id");
 

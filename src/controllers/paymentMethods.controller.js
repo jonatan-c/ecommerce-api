@@ -27,4 +27,25 @@ async function createPaymentMethod(req, res) {
   }
 }
 
-module.exports = { getAllPaymentMethods, createPaymentMethod };
+async function getPaymentMethodById(req, res) {
+  try {
+    const { id } = req.params;
+    const paymentMethod = await PaymentMethodsDB.findOne({
+      where: {
+        id_payment_method: id,
+      },
+    });
+    res.status(200).json(paymentMethod);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al obtener el metodo de pago",
+      error,
+    });
+  }
+}
+
+module.exports = {
+  getAllPaymentMethods,
+  createPaymentMethod,
+  getPaymentMethodById,
+};

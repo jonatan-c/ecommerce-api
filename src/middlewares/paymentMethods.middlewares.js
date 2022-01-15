@@ -24,4 +24,23 @@ async function isNamePaymentMethodsInDB(req, res, next) {
   next();
 }
 
-module.exports = { hasPaymentMethodsInDB, isNamePaymentMethodsInDB };
+async function isIdPaymentMethodInDB(req, res, next) {
+  const { id } = req.params;
+  const paymentMethod = await PaymentMethodsDB.findOne({
+    where: {
+      id_payment_method: id,
+    },
+  });
+  if (!paymentMethod) {
+    return res.status(200).json({
+      message: "El metodo de pago no existe",
+    });
+  }
+  next();
+}
+
+module.exports = {
+  hasPaymentMethodsInDB,
+  isNamePaymentMethodsInDB,
+  isIdPaymentMethodInDB,
+};
