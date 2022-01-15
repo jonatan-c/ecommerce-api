@@ -119,10 +119,26 @@ const isUserInDB = async (req, res, next) => {
   }
 };
 
+const isUserAnyoneOnline = async (req, res, next) => {
+  const user = await usersDB.findOne({
+    where: {
+      id_user: req.decoded.id_user,
+    },
+  });
+  if (user.online) {
+    next();
+  } else {
+    res.status(403).send({
+      mensaje: "The user is not online",
+    });
+  }
+};
+
 module.exports = {
   hasToken,
   isTokenSuperAdmin,
   isUserInDB,
   isTokenAdmin,
   isTokenUser,
+  isUserAnyoneOnline,
 };

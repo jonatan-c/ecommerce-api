@@ -22,11 +22,21 @@ Existen 3 tipos de usuarios:
    - No tiene otra funcionalidad mas.
 
 2. Admin
+
    - Puede CRUD productos.
    - Debe tener middleware que compruebe existencia de token
    - Debe tener middleware que comprueba token de role admin
    - Debe tener middleware que compruebe que el nombre de producto ya esta en base de datos
    - Puede CRUD categorias.
+
+   - [ new ] puede ver usuario online, para atencion al cliente
+
+3. Vendedor
+
+- Puede ver todas las ordenes
+- Puede ver todos los productos
+- Puede ver todos los usuarios
+
 3. User
 
    - Puede ver los productos de la tienda.
@@ -35,47 +45,18 @@ Existen 3 tipos de usuarios:
    - Puede ver sus datos personales
    - Puede modificar su password
    - Puede CRUD dirrecciones
-   -
+   - Puede CRUD ordenes de compra
+   - La orden debe contar con
+     - id_order
+     - id_user
+       - id_product
+     - id_paymentMethod
+     - id_address
+     - id_status
+   - El usuario debe esta online
+   - El usuario debe poder deslogearse
+   - El usuario podra cancelar una orden si el producto aun esta "sin armar"
+   - El usuario prodra armar una orden si el producto esta en estado "sin armar"
 
 4. No User (Guest)
    - Solo podra ver los productos con una capa de redis
-
-<details>
-<summary>Reglas de commit</summary>
-<br>
-[add] - Agregar un nuevo elemento
-<br>
-[del] - Eliminar un elemento
-<br>
-[mod] - Modificar un elemento
-<br>
-[fix] - Corregir un error
-<br>
-[doc] - Agregar documentacion
-<br>
-[test] - Agregar un test o modificarlo
-<br>
-[change] - Cambiar una caracteristica
-<br>
-[merge] - Merge de una branch
-<br>
-[dep] - Dependencias
-<br>
-[feat] - Nueva caracteristica
-<br>
-[refactor] - Refactorizar un codigo
-<br>
-[perf] - Mejora de performance
-<br>
-[revert] - Revertir un commit
-<br>
-[style] - Cambiar estilo, formato, nombre de variables
-<br>
-[ci] - Cambios en la integracion continua
-<br>
-[chore] - Cambios menores
-<br>
-
-</details>
-
-#### Regla de commits
