@@ -3,6 +3,7 @@ const {
   getAllPaymentMethods,
   createPaymentMethod,
   getPaymentMethodById,
+  editPaymentMethod,
 } = require("../controllers/paymentMethods.controller");
 const { hasToken, isTokenAdmin } = require("../middlewares/auth.middlewares");
 const {
@@ -33,7 +34,13 @@ router.get(
   isIdPaymentMethodInDB,
   getPaymentMethodById
 );
-router.put("/:id");
+router.put(
+  "/:id",
+  hasToken,
+  isTokenAdmin,
+  isIdPaymentMethodInDB,
+  editPaymentMethod
+);
 router.delete("/:id");
 
 module.exports = router;
@@ -111,8 +118,8 @@ module.exports = router;
  *  put:
  *    tags:
  *      - Admin PaymentMethods
- *    summary: Add a new product
- *    description: Add a new product
+ *    summary: Update a payment method by id
+ *    description: Update a payment method by id
  *    parameters:
  *    - name : x-auth-token
  *      value :
@@ -120,35 +127,15 @@ module.exports = router;
  *      dataType : string
  *      in : header
  *    - name: id
- *      description: id of the product
+ *      description: id of the payment method
  *      in: path
  *      required: true
  *      type: integer
- *    - name: name_product
- *      description: name of the product
+ *    - name: name_paymentMethod
+ *      description: name of the payment method
  *      in: formData
  *      required: true
  *      type: string
- *    - name : price_product
- *      description: price of the product
- *      in: formData
- *      required: true
- *      type: integer
- *    - name : description_product
- *      description:  description of the product
- *      in: formData
- *      required: true
- *      type: string
- *    - name : stock_product
- *      description: stock of the product
- *      in: formData
- *      required: true
- *      type: integer
- *    - name : id_category
- *      description: category of the product
- *      in: formData
- *      required: true
- *      type: integer
  *    responses:
  *      200:
  *        description: Success

@@ -44,8 +44,32 @@ async function getPaymentMethodById(req, res) {
   }
 }
 
+async function editPaymentMethod(req, res) {
+  try {
+    const { id } = req.params;
+    const { name_paymentMethod } = req.body;
+    const paymentMethod = await PaymentMethodsDB.update(
+      {
+        name_paymentMethod,
+      },
+      {
+        where: {
+          id_payment_method: id,
+        },
+      }
+    );
+    res.status(200).json({ message: "Metodo de pago actualizado" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al actualizar el metodo de pago",
+      error,
+    });
+  }
+}
+
 module.exports = {
   getAllPaymentMethods,
   createPaymentMethod,
   getPaymentMethodById,
+  editPaymentMethod,
 };
