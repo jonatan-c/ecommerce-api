@@ -12,4 +12,19 @@ async function getAllPaymentMethods(req, res) {
   }
 }
 
-module.exports = { getAllPaymentMethods };
+async function createPaymentMethod(req, res) {
+  try {
+    const { name_paymentMethod } = req.body;
+    const paymentMethod = await PaymentMethodsDB.create({
+      name_paymentMethod,
+    });
+    res.status(201).json({ message: "Metodo de pago creado" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al crear el metodo de pago",
+      error,
+    });
+  }
+}
+
+module.exports = { getAllPaymentMethods, createPaymentMethod };

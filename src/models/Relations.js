@@ -12,6 +12,7 @@ db.categoriesDB = require("./Categories.model");
 // db.ordersStatus= require("./OrdersStatus.model");
 db.addressDB = require("./Address.model");
 db.tableManyManyAddressUsersDB = require("./TableManyManyAddressUsers.model");
+db.paymentMethodsDB = require("./PaymentMethods.model");
 
 //************** Relaciones One-To-Many ; 1 categoria puede tener muchas productos. Ej: intel y razer ambos son categorias procesador.
 db.categoriesDB.hasMany(db.productsDB, {

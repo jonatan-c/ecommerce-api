@@ -10,4 +10,18 @@ async function hasPaymentMethodsInDB(req, res, next) {
   next();
 }
 
-module.exports = { hasPaymentMethodsInDB };
+async function isNamePaymentMethodsInDB(req, res, next) {
+  const paymentMethods = await PaymentMethodsDB.findOne({
+    where: {
+      name_paymentMethod: req.body.name_paymentMethod,
+    },
+  });
+  if (paymentMethods) {
+    return res.status(200).json({
+      message: "El metodo de pago ya existe",
+    });
+  }
+  next();
+}
+
+module.exports = { hasPaymentMethodsInDB, isNamePaymentMethodsInDB };

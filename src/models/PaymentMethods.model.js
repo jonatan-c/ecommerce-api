@@ -9,7 +9,7 @@ const PaymentMethodsDB = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    name_paymentMethod: {
       type: DataTypes.STRING,
     },
   },
