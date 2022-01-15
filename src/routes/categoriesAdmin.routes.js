@@ -2,7 +2,11 @@ const { Router } = require("express");
 const router = Router();
 
 // middleware
-const { hasToken, isTokenAdmin } = require("../middlewares/auth.middlewares");
+const {
+  hasToken,
+  isTokenAdmin,
+  isUserAnyoneOnline,
+} = require("../middlewares/auth.middlewares");
 const {
   existCategoriesInDB,
   isNameCategoryInDB,
@@ -17,11 +21,46 @@ const {
   deleteCategory,
 } = require("../controllers/categoriesAdmin.controller");
 
-router.get("/", hasToken, isTokenAdmin, existCategoriesInDB, getCategories);
-router.post("/", hasToken, isTokenAdmin, isNameCategoryInDB, createCategory);
-router.get("/:id", hasToken, isTokenAdmin, isCategoryIdInDB, getCategory);
-router.put("/:id", hasToken, isTokenAdmin, isCategoryIdInDB, editCategory);
-router.delete("/:id", hasToken, isTokenAdmin, isCategoryIdInDB, deleteCategory);
+router.get(
+  "/",
+  hasToken,
+  isTokenAdmin,
+  isUserAnyoneOnline,
+  existCategoriesInDB,
+  getCategories
+);
+router.post(
+  "/",
+  hasToken,
+  isTokenAdmin,
+  isUserAnyoneOnline,
+  isNameCategoryInDB,
+  createCategory
+);
+router.get(
+  "/:id",
+  hasToken,
+  isTokenAdmin,
+  isUserAnyoneOnline,
+  isCategoryIdInDB,
+  getCategory
+);
+router.put(
+  "/:id",
+  hasToken,
+  isTokenAdmin,
+  isUserAnyoneOnline,
+  isCategoryIdInDB,
+  editCategory
+);
+router.delete(
+  "/:id",
+  hasToken,
+  isTokenAdmin,
+  isUserAnyoneOnline,
+  isCategoryIdInDB,
+  deleteCategory
+);
 
 module.exports = router;
 

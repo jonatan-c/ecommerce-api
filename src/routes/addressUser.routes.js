@@ -3,10 +3,20 @@ const { getAllAddressUser } = require("../controllers/addressUser.controller");
 const {
   existNameAddressInDB,
 } = require("../middlewares/addressUser.middlewares");
-const { hasToken, isTokenUser } = require("../middlewares/auth.middlewares");
+const {
+  hasToken,
+  isTokenUser,
+  isUserAnyoneOnline,
+} = require("../middlewares/auth.middlewares");
 const router = Router();
 
-router.get("/", hasToken, isTokenUser, existNameAddressInDB);
+router.get(
+  "/",
+  hasToken,
+  isTokenUser,
+  isUserAnyoneOnline,
+  existNameAddressInDB
+);
 router.get("/:id");
 router.post("/");
 router.put("/:id");

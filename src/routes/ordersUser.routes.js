@@ -1,9 +1,13 @@
 const { Router } = require("express");
 const { getAllOrderByIdUser } = require("../controllers/orderUser.controller");
-const { hasToken, isTokenUser } = require("../middlewares/auth.middlewares");
+const {
+  hasToken,
+  isTokenUser,
+  isUserAnyoneOnline,
+} = require("../middlewares/auth.middlewares");
 const router = Router();
 
-router.get("/", hasToken, isTokenUser, getAllOrderByIdUser);
+router.get("/", hasToken, isTokenUser, isUserAnyoneOnline, getAllOrderByIdUser);
 
 module.exports = router;
 

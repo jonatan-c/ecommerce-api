@@ -1,7 +1,11 @@
 const { Router } = require("express");
 const router = Router();
 
-const { hasToken, isTokenAdmin } = require("../middlewares/auth.middlewares");
+const {
+  hasToken,
+  isTokenAdmin,
+  isUserAnyoneOnline,
+} = require("../middlewares/auth.middlewares");
 
 const {
   getOrdersStatus,
@@ -16,11 +20,19 @@ const {
   existNameOrderStatusInDB,
 } = require("../middlewares/ordersStatusAdmin.middlewares");
 
-router.get("/", hasToken, isTokenAdmin, existOrdersStatusInDB, getOrdersStatus);
+router.get(
+  "/",
+  hasToken,
+  isTokenAdmin,
+  isUserAnyoneOnline,
+  existOrdersStatusInDB,
+  getOrdersStatus
+);
 router.get(
   "/:id",
   hasToken,
   isTokenAdmin,
+  isUserAnyoneOnline,
   existOrdersStatusInDB,
   isIdOrderStatusInDB,
   getOrderStatus
@@ -29,6 +41,7 @@ router.post(
   "/",
   hasToken,
   isTokenAdmin,
+  isUserAnyoneOnline,
   existNameOrderStatusInDB,
   createOrderStatus
 );
@@ -36,6 +49,7 @@ router.put(
   "/:id",
   hasToken,
   isTokenAdmin,
+  isUserAnyoneOnline,
   existOrdersStatusInDB,
   isIdOrderStatusInDB,
   editOrderStatus
@@ -44,6 +58,7 @@ router.delete(
   "/:id",
   hasToken,
   isTokenAdmin,
+  isUserAnyoneOnline,
   existOrdersStatusInDB,
   isIdOrderStatusInDB,
   deleteOrderStatus
