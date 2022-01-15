@@ -20,6 +20,8 @@ const addressUserRoutes = require("./routes/addressUser.routes");
 const productsUsersRoutes = require("./routes/productsUser.routes");
 const productsGuestRoutes = require("./routes/productsGuest.routes");
 const parymentMethodsRoutes = require("./routes/paymentMethods.routes");
+
+const orderUserRoutes = require("./routes/ordersUser.routes");
 // ********************* SWAGGER ************
 
 const swaggerUI = require("swagger-ui-express");
@@ -52,7 +54,7 @@ app.use("/paymentMethods", parymentMethodsRoutes);
 // app.use("/usersAddress", addressUserRoutes);
 
 app.use("/productsUser", productsUsersRoutes);
-
+app.use("/orderUser", orderUserRoutes);
 // ********************************************* GUEST **********************
 app.use("/productsGuest", productsGuestRoutes);
 
