@@ -3,6 +3,7 @@ const {
   getAllOrderByIdUser,
   createOrder,
   editOrderByIdUser,
+  deleteOrderByIdUser,
 } = require("../controllers/orderUser.controller");
 const {
   hasToken,
@@ -39,6 +40,15 @@ router.put(
   isIdOrderStatusInDB,
   isIdOrderInDB,
   editOrderByIdUser
+);
+
+router.delete(
+  "/:id",
+  hasToken,
+  isTokenUser,
+  isUserAnyoneOnline,
+  isIdOrderInDB,
+  deleteOrderByIdUser
 );
 
 module.exports = router;

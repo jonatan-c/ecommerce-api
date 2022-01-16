@@ -61,8 +61,26 @@ async function editOrderByIdUser(req, res) {
   }
 }
 
+async function deleteOrderByIdUser(req, res) {
+  try {
+    const order = await OrderDB.destroy({
+      where: {
+        id_user: req.decoded.id_user,
+        id_order: req.params.id,
+      },
+    });
+    res.status(200).json({ message: "Order deleted" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al eliminar el pedido",
+      error,
+    });
+  }
+}
+
 module.exports = {
   getAllOrderByIdUser,
   createOrder,
   editOrderByIdUser,
+  deleteOrderByIdUser,
 };
