@@ -8,11 +8,22 @@ const {
   isTokenUser,
   isUserAnyoneOnline,
 } = require("../middlewares/auth.middlewares");
+const {
+  isIdPaymentMethodInDB,
+} = require("../middlewares/orderUser.middlewares");
+
 const router = Router();
 
 router.get("/", hasToken, isTokenUser, isUserAnyoneOnline, getAllOrderByIdUser);
 // el usuario deberia poder hacer las get post put delete, pero primero debe tener todas las asociaciones
-router.post("/", hasToken, isTokenUser, isUserAnyoneOnline, createOrder);
+router.post(
+  "/",
+  hasToken,
+  isTokenUser,
+  isUserAnyoneOnline,
+  isIdPaymentMethodInDB,
+  createOrder
+);
 module.exports = router;
 
 /**
@@ -74,6 +85,16 @@ module.exports = router;
  *      in : header
  *    - name: id_payment_method
  *      description: name of the payment method
+ *      in: formData
+ *      required: true
+ *      type: integer
+ *    - name: address
+ *      description: address
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    - name: number_address
+ *      description: number address
  *      in: formData
  *      required: true
  *      type: integer

@@ -9,9 +9,8 @@ db.Sequelize = Sequelize;
 db.productsDB = require("./Products.model");
 db.usersDB = require("./Users.model");
 db.categoriesDB = require("./Categories.model");
-// db.ordersStatus = require("./OrderStatus.model");
-db.addressDB = require("./Address.model");
-db.tableManyManyAddressUsersDB = require("./TableManyManyAddressUsers.model");
+// db.addressDB = require("./Address.model");
+
 db.paymentMethodsDB = require("./PaymentMethods.model");
 db.orderStatusDB = require("./OrderStatus.model");
 
@@ -25,19 +24,6 @@ db.categoriesDB.hasMany(db.productsDB, {
 db.productsDB.belongsTo(db.categoriesDB, {
   as: "category",
   foreignKey: "id_category",
-});
-
-// de aca abajo volver a revisar
-//************** Relaciones Many-To-Many ; muchas direcciones pueden tener muchos usuarios. Ej: user 1 puede tener caller 1, calle 2 , calle 3 y El usuario 2 puede tener calle 1 y calle 54.
-db.addressDB.belongsToMany(db.usersDB, {
-  as: "users",
-  through: { model: db.tableManyManyAddressUsersDB, unique: false },
-  foreignKey: "id_address",
-});
-db.usersDB.belongsToMany(db.addressDB, {
-  as: "addresses",
-  through: { model: db.tableManyManyAddressUsersDB, unique: false },
-  foreignKey: "id_user",
 });
 
 //
@@ -60,7 +46,7 @@ db.orderDB.belongsTo(db.usersDB, {
   as: "users",
   foreignKey: "id_user",
 });
-
+// Funciona
 db.orderDB.belongsTo(db.orderStatusDB, {
   as: "orderStatus",
   foreignKey: "id_order_status",
@@ -70,5 +56,17 @@ db.orderStatusDB.hasMany(db.orderDB, {
   as: "orders",
   foreignKey: "id_order_status",
 });
+
+// de aca abajo volver a revisar
+//************** Relaciones Many-To-Many ; muchas direcciones pueden tener muchos usuarios. Ej: user 1 puede tener caller 1, calle 2 , calle 3 y El usuario 2 puede tener calle 1 y calle 54.
+
+// db.orderDB.belongsTo(db.addressDB, {
+//   as: "address",
+//   foreignKey: "id_address",
+// });
+// db.addressDB.hasMany(db.orderDB, {
+//   as: "orders",
+//   foreignKey: "id_address",
+// });
 
 module.exports = db;

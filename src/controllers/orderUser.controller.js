@@ -6,6 +6,7 @@ async function getAllOrderByIdUser(req, res) {
       where: {
         id_user: req.decoded.id_user,
       },
+      include: ["paymentMethods", "orderStatus"],
     });
 
     res.status(200).json(order);
@@ -23,6 +24,8 @@ async function createOrder(req, res) {
       id_payment_method: req.body.id_payment_method,
       id_user: req.decoded.id_user,
       id_order_status: 1,
+      address: req.body.address,
+      number_address: req.body.number_address,
     });
     res.status(201).json(order);
   } catch (error) {

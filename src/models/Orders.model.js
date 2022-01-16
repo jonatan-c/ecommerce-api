@@ -9,6 +9,14 @@ const ordersDB = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    number_address: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     timestamps: false,
