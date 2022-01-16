@@ -2,6 +2,7 @@ const { Router } = require("express");
 const {
   getAllOrderByIdUser,
   createOrder,
+  editOrderByIdUser,
 } = require("../controllers/orderUser.controller");
 const {
   hasToken,
@@ -10,6 +11,8 @@ const {
 } = require("../middlewares/auth.middlewares");
 const {
   isIdPaymentMethodInDB,
+  isIdOrderStatusInDB,
+  isIdOrderInDB,
 } = require("../middlewares/orderUser.middlewares");
 
 const router = Router();
@@ -22,8 +25,22 @@ router.post(
   isTokenUser,
   isUserAnyoneOnline,
   isIdPaymentMethodInDB,
+  isIdOrderStatusInDB,
+  isIdOrderInDB,
   createOrder
 );
+
+router.put(
+  "/:id",
+  hasToken,
+  isTokenUser,
+  isUserAnyoneOnline,
+  isIdPaymentMethodInDB,
+  isIdOrderStatusInDB,
+  isIdOrderInDB,
+  editOrderByIdUser
+);
+
 module.exports = router;
 
 /**
@@ -118,32 +135,27 @@ module.exports = router;
  *      dataType : string
  *      in : header
  *    - name: id
- *      description: id of the product
+ *      description: id of the order
  *      in: path
  *      required: true
  *      type: integer
- *    - name: name_product
- *      description: name of the product
- *      in: formData
- *      required: true
- *      type: string
- *    - name : price_product
- *      description: price of the product
+ *    - name: id_payment_method
+ *      description: id of the payment method
  *      in: formData
  *      required: true
  *      type: integer
- *    - name : description_product
- *      description:  description of the product
- *      in: formData
- *      required: true
- *      type: string
- *    - name : stock_product
- *      description: stock of the product
+ *    - name : id_order_status
+ *      description: id of the order status
  *      in: formData
  *      required: true
  *      type: integer
- *    - name : id_category
- *      description: category of the product
+ *    - name : address
+ *      description:  address
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    - name : number_address
+ *      description: number address
  *      in: formData
  *      required: true
  *      type: integer

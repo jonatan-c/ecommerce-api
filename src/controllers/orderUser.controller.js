@@ -36,7 +36,33 @@ async function createOrder(req, res) {
   }
 }
 
+async function editOrderByIdUser(req, res) {
+  try {
+    const order = await OrderDB.update(
+      {
+        id_payment_method: req.body.id_payment_method,
+        id_order_status: req.body.id_order_status,
+        address: req.body.address,
+        number_address: req.body.number_address,
+      },
+      {
+        where: {
+          id_user: req.decoded.id_user,
+          id_order: req.params.id,
+        },
+      }
+    );
+    res.status(200).json({ message: "Order updated" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al actualizar el pedido",
+      error,
+    });
+  }
+}
+
 module.exports = {
   getAllOrderByIdUser,
   createOrder,
+  editOrderByIdUser,
 };
