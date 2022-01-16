@@ -125,7 +125,7 @@ const isUserAnyoneOnline = async (req, res, next) => {
       id_user: req.decoded.id_user,
     },
   });
-  if (user.online) {
+  if (user.state == "online") {
     next();
   } else {
     res.status(403).send({

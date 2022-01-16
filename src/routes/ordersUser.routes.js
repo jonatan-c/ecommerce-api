@@ -1,5 +1,8 @@
 const { Router } = require("express");
-const { getAllOrderByIdUser } = require("../controllers/orderUser.controller");
+const {
+  getAllOrderByIdUser,
+  createOrder,
+} = require("../controllers/orderUser.controller");
 const {
   hasToken,
   isTokenUser,
@@ -8,7 +11,8 @@ const {
 const router = Router();
 
 router.get("/", hasToken, isTokenUser, isUserAnyoneOnline, getAllOrderByIdUser);
-
+// el usuario deberia poder hacer las get post put delete, pero primero debe tener todas las asociaciones
+router.post("/", hasToken, isTokenUser, isUserAnyoneOnline, createOrder);
 module.exports = router;
 
 /**
@@ -68,28 +72,8 @@ module.exports = router;
  *      required : true
  *      dataType : string
  *      in : header
- *    - name: name_product
- *      description: name of the product
- *      in: formData
- *      required: true
- *      type: string
- *    - name : price_product
- *      description: price of the product
- *      in: formData
- *      required: true
- *      type: integer
- *    - name : description_product
- *      description:  description of the product
- *      in: formData
- *      required: true
- *      type: string
- *    - name : stock_product
- *      description: stock of the product
- *      in: formData
- *      required: true
- *      type: integer
- *    - name : id_category
- *      description: category of the product
+ *    - name: id_payment_method
+ *      description: name of the payment method
  *      in: formData
  *      required: true
  *      type: integer

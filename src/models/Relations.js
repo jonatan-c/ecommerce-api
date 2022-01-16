@@ -13,6 +13,7 @@ db.categoriesDB = require("./Categories.model");
 db.addressDB = require("./Address.model");
 db.tableManyManyAddressUsersDB = require("./TableManyManyAddressUsers.model");
 db.paymentMethodsDB = require("./PaymentMethods.model");
+db.orderStatusDB = require("./OrderStatus.model");
 
 db.orderDB = require("./Orders.model");
 
@@ -58,6 +59,16 @@ db.usersDB.hasMany(db.orderDB, {
 db.orderDB.belongsTo(db.usersDB, {
   as: "users",
   foreignKey: "id_user",
+});
+
+db.orderDB.belongsTo(db.orderStatusDB, {
+  as: "orderStatus",
+  foreignKey: "id_order_status",
+});
+
+db.orderStatusDB.hasMany(db.orderDB, {
+  as: "orders",
+  foreignKey: "id_order_status",
 });
 
 module.exports = db;
