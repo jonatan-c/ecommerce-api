@@ -4,6 +4,7 @@ const {
   createOrder,
   editOrderByIdUser,
   deleteOrderByIdUser,
+  getOrderByIdUser,
 } = require("../controllers/orderUser.controller");
 const {
   hasToken,
@@ -19,7 +20,16 @@ const {
 const router = Router();
 
 router.get("/", hasToken, isTokenUser, isUserAnyoneOnline, getAllOrderByIdUser);
-// el usuario deberia poder hacer las get post put delete, pero primero debe tener todas las asociaciones
+
+router.get(
+  "/:id",
+  hasToken,
+  isTokenUser,
+  isUserAnyoneOnline,
+  isIdOrderInDB,
+  getOrderByIdUser
+);
+
 router.post(
   "/",
   hasToken,

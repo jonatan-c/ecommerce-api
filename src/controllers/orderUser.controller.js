@@ -18,6 +18,24 @@ async function getAllOrderByIdUser(req, res) {
   }
 }
 
+async function getOrderByIdUser(req, res) {
+  try {
+    const order = await OrderDB.findOne({
+      where: {
+        id_user: req.decoded.id_user,
+        id_order: req.params.id,
+      },
+      include: ["paymentMethods", "orderStatus"],
+    });
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al obtener el pedido",
+      error,
+    });
+  }
+}
+
 async function createOrder(req, res) {
   try {
     const order = await OrderDB.create({
@@ -83,4 +101,5 @@ module.exports = {
   createOrder,
   editOrderByIdUser,
   deleteOrderByIdUser,
+  getOrderByIdUser,
 };
