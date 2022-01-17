@@ -5,6 +5,7 @@ const {
   editOrderByIdUser,
   deleteOrderByIdUser,
   getOrderByIdUser,
+  associateProductInOrder,
 } = require("../controllers/orderUser.controller");
 const {
   hasToken,
@@ -29,16 +30,22 @@ router.get(
   isIdOrderInDB,
   getOrderByIdUser
 );
-
+// revisar luego post de createOrder y associate, porque utilize el middleware de status o payment y esos verificaban el id pero del params , no del body
 router.post(
   "/",
   hasToken,
   isTokenUser,
   isUserAnyoneOnline,
-  isIdPaymentMethodInDB,
   isIdOrderStatusInDB,
-  isIdOrderInDB,
   createOrder
+);
+
+router.post(
+  "/addProducts",
+  hasToken,
+  isTokenUser,
+  isUserAnyoneOnline,
+  associateProductInOrder
 );
 
 router.put(
@@ -132,6 +139,45 @@ module.exports = router;
  *      type: string
  *    - name: number_address
  *      description: number address
+ *      in: formData
+ *      required: true
+ *      type: integer
+ *    - name: id_order_status
+ *      description: order status
+ *      in: formData
+ *      required: true
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ */
+
+/**
+ * @swagger
+ * /orderUser/addProducts:
+ *  post:
+ *    tags:
+ *      - User Order
+ *    summary: associate a product in an order
+ *    description: associate a product in an order
+ *    parameters:
+ *    - name : x-auth-token
+ *      value :
+ *      required : true
+ *      dataType : string
+ *      in : header
+ *    - name: id_order
+ *      description: id of the order
+ *      in: formData
+ *      required: true
+ *      type: integer
+ *    - name: id_product
+ *      description: id of the product
+ *      in: formData
+ *      required: true
+ *      type: integer
+ *    - name: quantity
+ *      description: quantity of the product
  *      in: formData
  *      required: true
  *      type: integer

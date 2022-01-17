@@ -1,19 +1,19 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../config/db.config");
 
-const AdressDB = sequelize.define(
-  "address",
+const table_products_ordersDB = sequelize.define(
+  "producs_orders",
   {
-    id_address: {
+    id_products_orders: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
-      type: DataTypes.STRING,
+    quantity_product: {
+      type: Sequelize.INTEGER,
     },
-    number: {
-      type: DataTypes.INTEGER,
+    price_total: {
+      type: Sequelize.INTEGER,
     },
   },
 
@@ -22,4 +22,4 @@ const AdressDB = sequelize.define(
   }
 );
 
-module.exports = AdressDB;
+module.exports = table_products_ordersDB;
