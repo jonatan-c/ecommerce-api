@@ -139,6 +139,31 @@ async function editOrderByIdUser(req, res) {
   }
 }
 
+async function editAssociateByIdUser(req, res) {
+  try {
+    const order = await table_products_ordersDB.update(
+      {
+        // id_order: req.body.id_order,
+        id_product: req.params.idOrder,
+        quantity_product: req.body.quantity_product,
+        // price_total: req.body.price_total,
+      },
+      {
+        where: {
+          id_user: req.decoded.id_user,
+          id_product: req.params.idProduct,
+        },
+      }
+    );
+    res.status(200).json({ message: "Associate Order updated" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al actualizar el pedido",
+      error,
+    });
+  }
+}
+
 async function deleteOrderByIdUser(req, res) {
   try {
     const order = await OrderDB.destroy({
@@ -163,4 +188,5 @@ module.exports = {
   deleteOrderByIdUser,
   getOrderByIdUser,
   associateProductInOrder,
+  editAssociateByIdUser,
 };

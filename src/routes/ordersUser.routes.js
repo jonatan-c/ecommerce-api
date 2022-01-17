@@ -6,6 +6,7 @@ const {
   deleteOrderByIdUser,
   getOrderByIdUser,
   associateProductInOrder,
+  editAssociateByIdUser,
 } = require("../controllers/orderUser.controller");
 const {
   hasToken,
@@ -57,6 +58,15 @@ router.put(
   isIdOrderStatusInDB,
   isIdOrderInDB,
   editOrderByIdUser
+);
+
+router.put(
+  "/:idOrder/associated/:idProduct",
+  hasToken,
+  isTokenUser,
+  isUserAnyoneOnline,
+
+  editAssociateByIdUser
 );
 
 router.delete(
@@ -222,6 +232,40 @@ module.exports = router;
  *      type: string
  *    - name : number_address
  *      description: number address
+ *      in: formData
+ *      required: true
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ */
+
+/**
+ * @swagger
+ * /orderUser/{idOrder}/associated/{idProduct}:
+ *  put:
+ *    tags:
+ *      - User Order
+ *    summary: Add a new product
+ *    description: Add a new product
+ *    parameters:
+ *    - name : x-auth-token
+ *      value :
+ *      required : true
+ *      dataType : string
+ *      in : header
+ *    - name: idOrder
+ *      description: id of the order
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    - name: idProduct
+ *      description: id of the payment method
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    - name : quantity_product
+ *      description: id of the order status
  *      in: formData
  *      required: true
  *      type: integer
