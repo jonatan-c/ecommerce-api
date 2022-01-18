@@ -161,6 +161,23 @@ async function editAssociateByIdUser(req, res) {
   }
 }
 
+async function deleteAssociatedByIdUSer(req, res) {
+  try {
+    const order = await table_products_ordersDB.destroy({
+      where: {
+        id_order: req.params.idOrder,
+        id_product: req.params.idProduct,
+      },
+    });
+    res.status(200).json({ message: "Associate Product Order deleted" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al eliminar el pedido",
+      error,
+    });
+  }
+}
+
 async function deleteOrderByIdUser(req, res) {
   try {
     const order = await OrderDB.destroy({
@@ -186,4 +203,5 @@ module.exports = {
   getOrderByIdUser,
   associateProductInOrder,
   editAssociateByIdUser,
+  deleteAssociatedByIdUSer,
 };

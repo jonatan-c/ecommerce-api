@@ -7,6 +7,7 @@ const {
   getOrderByIdUser,
   associateProductInOrder,
   editAssociateByIdUser,
+  deleteAssociatedByIdUSer,
 } = require("../controllers/orderUser.controller");
 const {
   hasToken,
@@ -76,6 +77,15 @@ router.delete(
   isUserAnyoneOnline,
   isIdOrderInDB,
   deleteOrderByIdUser
+);
+
+router.delete(
+  "/:idOrder/associated/:idProduct",
+  hasToken,
+  isTokenUser,
+  isUserAnyoneOnline,
+
+  deleteAssociatedByIdUSer
 );
 
 module.exports = router;
@@ -289,6 +299,35 @@ module.exports = router;
  *      dataType : string
  *      in : header
  *    - name: id
+ *      description: id of the product
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ */
+
+/**
+ * @swagger
+ * /orderUser/{idOrder}/associated/{idProduct}:
+ *  delete:
+ *    tags:
+ *      - User Order
+ *    summary: Delete a product of an order by id
+ *    description:  Delete a product of an order by id
+ *    parameters:
+ *    - name : x-auth-token
+ *      value :
+ *      required : true
+ *      dataType : string
+ *      in : header
+ *    - name: idOrder
+ *      description: id of the order
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    - name: idProduct
  *      description: id of the product
  *      in: path
  *      required: true
