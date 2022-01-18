@@ -143,14 +143,11 @@ async function editAssociateByIdUser(req, res) {
   try {
     const order = await table_products_ordersDB.update(
       {
-        // id_order: req.body.id_order,
-        id_product: req.params.idOrder,
         quantity_product: req.body.quantity_product,
-        // price_total: req.body.price_total,
       },
       {
         where: {
-          id_user: req.decoded.id_user,
+          id_order: req.params.idOrder,
           id_product: req.params.idProduct,
         },
       }
