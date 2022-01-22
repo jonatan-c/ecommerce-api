@@ -1,5 +1,17 @@
 const { Router } = require("express");
 const router = Router();
+// **** Images
+const fs = require("fs");
+const multer = require("multer");
+const path = require("path");
+const storage = multer.diskStorage({
+  destination: path.join(__dirname, "../images/products_images/input/"),
+  filename: (req, file, cb) => {
+    cb(null, `${file.originalname}`);
+  },
+});
+const upload = multer({ storage });
+// ****
 
 const {
   hasProductInDB,
@@ -44,6 +56,7 @@ router.post(
   isTokenAdmin,
   isUserAnyoneOnline,
   isNameProductInDB,
+  upload.single("image_product"),
   isCategoryIdDB,
   createProduct
 );
@@ -149,6 +162,11 @@ module.exports = router;
  *      in: formData
  *      required: true
  *      type: integer
+ *    - name : image_product
+ *      description: image of the products
+ *      in: formData
+ *      required: true
+ *      type: file
  *    responses:
  *      200:
  *        description: Success

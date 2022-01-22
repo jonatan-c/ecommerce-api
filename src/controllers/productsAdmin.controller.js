@@ -1,11 +1,43 @@
 const ProductsDB = require("../models/Products.model");
 
+const fs = require("fs");
+const path = require("path");
+
 async function getAllProducts(req, res) {
   try {
     const products = await ProductsDB.findAll({
       include: ["category"],
     });
-    res.json(products);
+    // *** multer
+    products.map((img) => {
+      fs.writeFileSync(
+        path.join(
+          __dirname,
+          "../images/products_images/output/" + img.id_product + "imagen.png"
+        ),
+        img.image_product
+      );
+    });
+    const imagesDir = fs.readdirSync(
+      path.join(__dirname, "../images/products_images/output/")
+    );
+
+    //*****
+    const resultadoFinal = products.map((product) => {
+      return {
+        id_product: product.id_product,
+        name_product: product.name_product,
+        price_product: product.price_product,
+        description_product: product.description_product,
+        stock_product: product.stock_product,
+        id_category: product.id_category,
+        image_product: `http://localhost:4005/${imagesDir.find((img) =>
+          img.includes(product.id_product)
+        )}`,
+        category: product.category,
+      };
+      res.json(resultadoFinal);
+    });
   } catch (error) {
     res.status(500).json(error);
     console.log(error);
@@ -27,12 +59,20 @@ async function getProductById(req, res) {
 
 async function createProduct(req, res) {
   try {
+    const data = fs.readFileSync(
+      path.join(
+        __dirname,
+        "../images/products_images/input/",
+        req.file.filename
+      )
+    );
     const product = await ProductsDB.create({
       name_product: req.body.name_product,
       price_product: req.body.price_product,
       description_product: req.body.description_product,
       stock_product: req.body.stock_product,
       id_category: parseInt(req.body.id_category),
+      image_product: data,
     });
 
     res.status(201).json("Product created");
