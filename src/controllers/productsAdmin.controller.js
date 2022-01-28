@@ -36,8 +36,8 @@ async function getAllProducts(req, res) {
         )}`,
         category: product.category,
       };
-      res.json(resultadoFinal);
     });
+    res.json(resultadoFinal);
   } catch (error) {
     res.status(500).json(error);
     console.log(error);

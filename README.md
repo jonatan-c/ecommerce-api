@@ -59,4 +59,7 @@ Existen 3 tipos de usuarios:
    - El usuario prodra armar una orden si el producto esta en estado "sin armar"
 
 4. No User (Guest)
+
    - Solo podra ver los productos con una capa de redis
+
+5. Api alojada en Heroku
