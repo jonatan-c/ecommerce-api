@@ -4,6 +4,9 @@ Puede ver el trello aqui:
 
 [Trello](https://trello.com/b/sTSXIfQZ/backlog)
 
+Aplicacion Backend para una ecommerce, tengra 3 usuarios, super admin, admin , cliente e invitado.
+La base de datos esta hecha en MySQL.
+
 <details>
 <summary>PARA NO DESARROLLADORES  </summary>
 <br>
