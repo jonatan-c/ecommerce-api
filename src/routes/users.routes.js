@@ -7,7 +7,11 @@ const {
   getUserById,
   updateRole,
 } = require("../controllers/users.controller");
-const { isEmailValid } = require("../middlewares/users.middlewares");
+const {
+  isEmailValid,
+  isEmail,
+  isPasswordValid,
+} = require("../middlewares/users.middlewares");
 // const { isUserInDB } = require("../controllers/auth.controller");
 const {
   hasToken,
@@ -17,7 +21,7 @@ const {
 } = require("../middlewares/auth.middlewares");
 
 // registro comun para todos los usuarios
-router.post("/register", isEmailValid, createUser);
+router.post("/register", isEmail, isPasswordValid, isEmailValid, createUser);
 
 //solo el SuperAdmin puede acceder a estas 2 rutas
 router.get("/", hasToken, isTokenSuperAdmin, isUserAnyoneOnline, getAllUsers);
