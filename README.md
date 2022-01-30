@@ -66,3 +66,5 @@ Existen 3 tipos de usuarios:
    - Solo podra ver los productos con una capa de redis
 
 5. Api alojada en Heroku
+
+Test Hechos con Mocha
