@@ -47,4 +47,32 @@ async function isIdOrderInDB(req, res, next) {
   next();
 }
 
-module.exports = { isIdPaymentMethodInDB, isIdOrderStatusInDB, isIdOrderInDB };
+async function isOrderPending(req, res, next) {
+  try {
+    const orderStatus = await OrderDB.findOne({
+      where: {
+        id_order_status: parseInt(1),
+        id_user: req.decoded.id_user,
+        id_order: req.params.id,
+      },
+    });
+    if (!orderStatus) {
+      return res.status(400).json({
+        message: "El pedido no está pendiente, no puedes hacer cambios",
+      });
+    }
+    next();
+  } catch (error) {
+    res.status(500).json({
+      message: "Error Server",
+      error,
+    });
+  }
+}
+
+module.exports = {
+  isIdPaymentMethodInDB,
+  isIdOrderStatusInDB,
+  isIdOrderInDB,
+  isOrderPending,
+};

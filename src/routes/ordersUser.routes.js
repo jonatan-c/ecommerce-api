@@ -18,6 +18,7 @@ const {
   isIdPaymentMethodInDB,
   isIdOrderStatusInDB,
   isIdOrderInDB,
+  isOrderPending,
 } = require("../middlewares/orderUser.middlewares");
 
 const router = Router();
@@ -39,6 +40,7 @@ router.post(
   isTokenUser,
   isUserAnyoneOnline,
   isIdOrderStatusInDB,
+  isIdPaymentMethodInDB,
   createOrder
 );
 
@@ -58,6 +60,7 @@ router.put(
   isIdPaymentMethodInDB,
   isIdOrderStatusInDB,
   isIdOrderInDB,
+  isOrderPending,
   editOrderByIdUser
 );
 

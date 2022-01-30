@@ -35,7 +35,7 @@ const isTokenSuperAdmin = (req, res, next) => {
         return res.status(404).json({ mensaje: "Token inválida" });
       } else {
         req.decoded = decoded;
-        if (req.decoded.role == "SuperAdmin") {
+        if (req.decoded.role == "superAdmin") {
           next();
         } else {
           return res.status(403).json({
@@ -61,7 +61,7 @@ const isTokenAdmin = (req, res, next) => {
         return res.status(403).json({ mensaje: "Token inválida" });
       } else {
         req.decoded = decoded;
-        if (req.decoded.role == "Admin") {
+        if (req.decoded.role == "admin") {
           next();
         } else {
           return res.status(403).json({
@@ -87,7 +87,7 @@ const isTokenUser = (req, res, next) => {
         return res.status(403).json({ mensaje: "Token inválida" });
       } else {
         req.decoded = decoded;
-        if (req.decoded.role == "User") {
+        if (req.decoded.role == "user") {
           next();
         } else {
           return res.status(403).json({
