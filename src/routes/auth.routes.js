@@ -4,12 +4,14 @@ const router = Router();
 const {
   autenticateUser,
   getUserAutenticated,
+  closeSesion,
 } = require("../controllers/auth.controller");
 
 const { hasToken } = require("../middlewares/auth.middlewares");
 
 // login
 router.post("/", autenticateUser);
+router.post("/closeSesion", hasToken, closeSesion);
 // obtiene que usuario esta autenticado
 router.get("/", hasToken, getUserAutenticated);
 
@@ -50,6 +52,25 @@ module.exports = router;
  *    parameters:
  *    - name : x-auth-token
  *      value : Authorization token
+ *      required : true
+ *      dataType : string
+ *      in : header
+ *    responses:
+ *      200:
+ *        description: Success
+ */
+
+/**
+ * @swagger
+ * /auth/closeSesion:
+ *  post:
+ *    tags:
+ *      - Login - Auth
+ *    summary: You can login a user
+ *    description: You can login a user
+ *    parameters:
+ *    - name : x-auth-token
+ *      value :
  *      required : true
  *      dataType : string
  *      in : header

@@ -68,6 +68,27 @@ const getUserAutenticated = async (req, res) => {
   res.json(usuario);
 };
 
+const closeSesion = async (req, res) => {
+  try {
+    const user = await usersDB.update(
+      {
+        state: "offline",
+      },
+      {
+        where: { id_user: req.decoded.id_user },
+      }
+    );
+    res.status(200).json({
+      message: "Close Sesion Correctly",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error closing session",
+      error,
+    });
+  }
+};
+
 // const updateRole = async (req, res) => {
 //   try {
 //     const result = await usersDB.update(
@@ -82,4 +103,4 @@ const getUserAutenticated = async (req, res) => {
 //   }
 // };
 
-module.exports = { autenticateUser, getUserAutenticated };
+module.exports = { autenticateUser, getUserAutenticated, closeSesion };
