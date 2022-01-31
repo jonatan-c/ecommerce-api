@@ -19,22 +19,34 @@ async function getAllOrderByIdUser(req, res) {
     const ordersFinal = orders.map((order) => {
       return {
         id_order: order.id_order,
+        address: order.address,
         number_address: order.number_address,
         paymentMethods: order.paymentMethods,
         orderStatus: order.orderStatus,
-        productsTotals: order.products2.map((element) => {
+        products2: order.products2.map((element) => {
           return {
             id_product: element.id_product,
             name_product: element.name_product,
             price_product: element.price_product,
+            description: element.description_product,
+            id_category: element.id_category,
+            producs_orders: element.producs_orders,
+          };
+        }),
+        PriceTotalOrder: order.products2.map((element) => {
+          return {
+            price_total: element.producs_orders.price_total,
           };
         }),
       };
     });
-    res.status(200).json({
-      message: "Orders",
-      ordersFinal,
-    });
+    // suma productos
+    const resultadoSumaTotal =
+      // element.reduce((total, element) => total + element.price_product, 0)
+      res.status(200).json({
+        message: "Orders",
+        ordersFinal,
+      });
   } catch (error) {
     res.status(500).json({
       message: "Error al obtener los pedidos",

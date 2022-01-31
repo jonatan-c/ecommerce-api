@@ -18,9 +18,6 @@ const ProductsDB = sequelize.define(
     description_product: {
       type: DataTypes.STRING,
     },
-    stock_product: {
-      type: DataTypes.INTEGER,
-    },
     image_product: {
       type: DataTypes.BLOB("long"),
     },
