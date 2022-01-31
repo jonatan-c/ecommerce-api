@@ -152,11 +152,6 @@ module.exports = router;
  *      in: formData
  *      required: true
  *      type: string
- *    - name : stock_product
- *      description: stock of the product
- *      in: formData
- *      required: true
- *      type: integer
  *    - name : id_category
  *      description: category of the product
  *      in: formData

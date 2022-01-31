@@ -45,13 +45,13 @@ const isPasswordValid = async (req, res, next) => {
   try {
     const password1 = req.body.password1;
     const regex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,25}$/;
     if (regex.test(password1)) {
       next();
     } else {
       return res.status(400).json({
         message:
-          "Password is not valid, must be haver, 8-15 characters, at least one uppercase letter, one lowercase letter, one number and one special character",
+          "Password is not valid, must be have, 8-25 characters, at least one uppercase letter, one lowercase letter, one number and one special character",
       });
     }
   } catch (error) {

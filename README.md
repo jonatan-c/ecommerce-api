@@ -63,17 +63,20 @@ DB_PORT=3306
 SECRET_TOKEN=secreto
 ```
 
-5. Importar en base de datos el archivo que esta en la carpeta `sql`
+5. Importar en base de datos el archivo que esta en la carpeta `sql/files`
    Este trae datos cargados por defecto.
    <br>
-   Usuario: ID = 1 ; Email = superadmin@gmail.com ; Password = $EcommerceSuperAdmin2022
+   Usuario: ID = 1 ; Email = superadmin@gmail.com ; Password = $EcommerceSuperAdmin1
    <br>
-   Usuario: ID = 2 ; Email = admin@gmail.com ; Password = $EcommerceAdmin2022
+   Usuario: ID = 2 ; Email = admin@gmail.com ; Password = $EcommerceAdmin1
    <br>
-   Usuario: ID = 3 ; Email = user@gmail.com ; Password = $EcommerceUsuario2022
+   Usuario: ID = 3 ; Email = user@gmail.com ; Password = $EcommerceUser1
    <br>
+   Tambien trae cargado los estados -> PENDIENTE - ORDEN RECIBIDA - ARMANDO - ENVIANDO.
+   El usuario con rol "SuperAdmin" solo lo puede generar el desarrollador modifcando la tabla "users".
+   Con esto se logra que ese rol sea el unico que puede generar usuarios "admin".
 6. Iniciar el servidor con el comando npm run dev
-   En consola saldra el path del server y de la documentacion
+   En consola saldra el path del server y de la documentacion.
 
 <br>
 </details>
