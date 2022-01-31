@@ -1,70 +1,95 @@
-## Api de una tienda ecommerce
-
-Puede ver el trello aqui:
-
-[Trello](https://trello.com/b/sTSXIfQZ/backlog)
-
-Aplicacion Backend para una ecommerce, tengra 3 usuarios, super admin, admin , cliente e invitado.
-La base de datos esta hecha en MySQL.
+## Backend de una tienda Ecommerce
 
 <details>
-<summary>PARA NO DESARROLLADORES  </summary>
+<summary>Backlog</summary>
+
+- [x] El email no debe estar repetido.
+- [x] El email debe contener @.
+- [x] La password debe tener mas de 8 caracteres y menos que 15, debe tener almenos un numero, un caracter y una mayuscula.
+- [x] Los metodos de pago seran un string indicando a cual hace referencia, la implementacion de comprobacion requiere Frontend.
+- [x] Los estados de las ordenes seran ( PENDIENTE - ORDEN RECIBIDA - ARMANDO - ENVIANDO)
+- [x] Solo se podra modificar cuando la orden esten en PENDIENTE
+- [x] Deben existir 3 roles → Super Admin, Admin, User
+      Como SuperAdmin:
+- [x] Los datos del SUPERADMIN deben ser entregados por el Desarrollador
+- [x] Debe contar con middleware que compruebe existencia de token.
+- [x] Debe contar con middleware que compruebe que el token tenga role de SuperAdmin.
+- [x] Debe contar con middleware que compruebe que el id ingresado sea el correspondiente.
+      Como Admin:
+- [x] El usuario ADMIN debe poder [ CRUD ] productos.
+- [x] Debe tener middleware que compruebe existencia de token.
+- [x] Debe tener middleware que comprueba token de role admin.
+- [x] Debe tener middleware que compruebe que el nombre de producto ya esta en base de datos.
+- [x] Puede [CRUD] categorias.
+- [x] Las categorias no pueden estar repetidas.
+      Como Usuario:
+- [x] Debe estar online para habilitar ordenes.
+- [x] El usuario debe poder deslogearse.
+- [x] Puede ver los productos de la tienda.
+- [x] Puede ver sus ordenes de compra.
+- [x] Puede ver sus datos personales.
+- [x] Puede CRUD ordenes de compra.
+- [x] El usuario podra ELIMIINAR una orden si el producto aun esta "PENDIENTE".
+- [x] El usuario prodra EDITAR una orden si esta en estado "PENDIENTE".
+- [x] los productos deben tener querys/filtros:
+  - [x] por paginas
+  - [x] por numero de elementos
+  - [x] por categoria
+
 <br>
 </details>
 
-Existen 3 tipos de usuarios:
+<details>
+<summary>Instalacion</summary>
 
-1. SuperAdmin.
+1. Clonar o descargar el repositorio.
+2. Instalar las dependencias con el comando `npm install`
+3. Crear una base de datos llamada: ecommerce_api
+4. Crear un archivo `.env` en la raiz de la carpeta
+   Pegar el siguiente codigo y completar
 
-   - Se crea uno solo, el user y password es creado por el desarrollador.
-   - Puede ver todos los datos de usuario, menos la password.
-   - Puede modificar solamente el role de los usuarios.
-   - Debe contar con middleware que compruebe existencia de token
-   - Debe contar con middleware que compruebe que el token tenga role de SuperAdmin.
-   - Debe contar con middleware que compruebe que el id ingresado sea
-   - No tiene otra funcionalidad mas.
+```
+// SERVER
+PORT_SERVER=4005
 
-2. Admin
+// BASE DE DATOS
+DB_NAME=ecommerce_api
+DB_USER="ingresar usuario"
+DB_PASSWORD="ingresar password"
+DB_HOST=localhost
+DB_PORT=3306
 
-   - Puede CRUD productos.
-   - Debe tener middleware que compruebe existencia de token
-   - Debe tener middleware que comprueba token de role admin
-   - Debe tener middleware que compruebe que el nombre de producto ya esta en base de datos
-   - Puede CRUD categorias.
+// JWT
+SECRET_TOKEN=secreto
+```
 
-   - [ new ] puede ver usuario online, para atencion al cliente
+5. Importar en base de datos el archivo que esta en la carpeta `sql`
+   Este trae datos cargados por defecto.
+   <br>
+   Usuario: ID = 1 ; Email = superadmin@gmail.com ; Password = $EcommerceSuperAdmin2022
+   <br>
+   Usuario: ID = 2 ; Email = admin@gmail.com ; Password = $EcommerceAdmin2022
+   <br>
+   Usuario: ID = 3 ; Email = user@gmail.com ; Password = $EcommerceUsuario2022
+   <br>
+6. Iniciar el servidor con el comando npm run dev
+   En consola saldra el path del server y de la documentacion
 
-3. Vendedor
+<br>
+</details>
 
-- Puede ver todas las ordenes
-- Puede ver todos los productos
-- Puede ver todos los usuarios
+<details>
+<summary>Imagen Swagger</summary>
 
-3. User
+![ ](imagesReadme/ecommerce-swagger.png)
 
-   - Puede ver los productos de la tienda.
-   - Puede ver sus ordenes de compra
-   - Puede ver sus direcciones
-   - Puede ver sus datos personales
-   - Puede modificar su password
-   - Puede CRUD dirrecciones
-   - Puede CRUD ordenes de compra
-   - La orden debe contar con
-     - id_order
-     - id_user
-       - id_product
-     - id_paymentMethod
-     - id_address
-     - id_status
-   - El usuario debe esta online
-   - El usuario debe poder deslogearse
-   - El usuario podra cancelar una orden si el producto aun esta "sin armar"
-   - El usuario prodra armar una orden si el producto esta en estado "sin armar"
+<br>
+</details>
 
-4. No User (Guest)
+<details>
+<summary>Imagen DER</summary>
 
-   - Solo podra ver los productos con una capa de redis
+![ ](imagesReadme/ecommerce-der.png)
 
-5. Api alojada en Heroku
-
-Test Hechos con Mocha
+<br>
+</details>
