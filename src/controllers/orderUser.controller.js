@@ -5,17 +5,35 @@ const ProductsDB = require("../models/Products.model");
 const PaymentMethodsDB = require("../models/PaymentMethods.model");
 const orderStatusDB = require("../models/OrderStatus.model");
 
+const fs = require("fs");
+const path = require("path");
+
 async function getAllOrderByIdUser(req, res) {
   try {
-    const order = await OrderDB.findAll({
+    const orders = await OrderDB.findAll({
+      include: ["paymentMethods", "orderStatus", "products2"],
       where: {
         id_user: req.decoded.id_user,
       },
-      include: ["paymentMethods", "orderStatus", "products2"],
+    });
+    const ordersFinal = orders.map((order) => {
+      return {
+        id_order: order.id_order,
+        number_address: order.number_address,
+        paymentMethods: order.paymentMethods,
+        orderStatus: order.orderStatus,
+        productsTotals: order.products2.map((element) => {
+          return {
+            id_product: element.id_product,
+            name_product: element.name_product,
+            price_product: element.price_product,
+          };
+        }),
+      };
     });
     res.status(200).json({
       message: "Orders",
-      order,
+      ordersFinal,
     });
   } catch (error) {
     res.status(500).json({
@@ -27,19 +45,37 @@ async function getAllOrderByIdUser(req, res) {
 
 async function getOrderByIdUser(req, res) {
   try {
-    const order = await OrderDB.findOne({
+    const orders = await OrderDB.findAll({
+      include: ["paymentMethods", "orderStatus", "products2"],
       where: {
         id_user: req.decoded.id_user,
         id_order: req.params.id,
       },
-      include: [
-        "paymentMethods",
-        "orderStatus",
-        "table_products_orders",
-        "products2",
-      ],
     });
-    res.status(200).json(order);
+
+    const ordersFinal = orders.map((order) => {
+      return {
+        id_order: order.id_order,
+        id_payment_method: order.id_payment_method,
+        id_order_status: order.id_order_status,
+        address: order.address,
+        number_address: order.number_address,
+        paymentMethods: order.paymentMethods,
+        orderStatus: order.orderStatus,
+        productsTotals: order.products2.map((element) => {
+          return {
+            id_product: element.id_product,
+            name_product: element.name_product,
+            price_product: element.price_product,
+          };
+        }),
+      };
+    });
+
+    res.status(200).json({
+      message: "Orders",
+      ordersFinal,
+    });
   } catch (error) {
     res.status(500).json({
       message: "Error al obtener el pedido",
@@ -69,11 +105,17 @@ async function createOrder(req, res) {
 // ASOCIACIONES
 async function associateProductInOrder(req, res) {
   try {
+    const priceProduct = await ProductsDB.findOne({
+      where: {
+        id_product: req.body.id_product,
+      },
+    });
+
     const product = await table_products_ordersDB.create({
       id_order: req.body.id_order,
       id_product: req.body.id_product,
       quantity_product: req.body.quantity_product,
-      price_total: req.body.price_total,
+      price_total: priceProduct.price_product * req.body.quantity_product,
     });
 
     res.status(201).json({ message: "Product associated" });

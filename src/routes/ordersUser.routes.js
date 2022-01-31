@@ -199,7 +199,7 @@ module.exports = router;
  *      in: formData
  *      required: true
  *      type: integer
- *    - name: quantity
+ *    - name: quantity_product
  *      description: quantity of the product
  *      in: formData
  *      required: true

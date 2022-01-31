@@ -4,4 +4,5 @@ const port = process.env.PORT_SERVER;
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Documentation is running on http://localhost:${port}/api-docs`);
 });

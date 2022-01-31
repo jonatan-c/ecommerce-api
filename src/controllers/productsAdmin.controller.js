@@ -37,7 +37,36 @@ async function getAllProducts(req, res) {
         category: product.category,
       };
     });
-    res.json(resultadoFinal);
+
+    const { pageNumber, pageSize, category } = req.query;
+
+    if (category !== undefined) {
+      const mapped = resultadoFinal.filter((product) => {
+        return product.category.name_category === category;
+      });
+
+      res.status(200).json(mapped);
+    } else if (pageNumber !== undefined) {
+      const mapeoDelPaginado = resultadoFinal.length / pageSize;
+      const mapped = resultadoFinal.slice(
+        (pageNumber - 1) * pageSize,
+        pageNumber * pageSize
+      );
+
+      res.status(200).json(mapped);
+    } else if (pageSize !== undefined) {
+      const pageInitial = 0;
+      const pageNumberNext = 10;
+
+      const paginated = resultadoFinal.slice(
+        (pageInitial - 1) * pageSize,
+        pageNumberNext * pageSize
+      );
+
+      res.status(200).json(paginated);
+    } else {
+      res.status(200).json(resultadoFinal);
+    }
   } catch (error) {
     res.status(500).json(error);
     console.log(error);
@@ -46,11 +75,40 @@ async function getAllProducts(req, res) {
 
 async function getProductById(req, res) {
   try {
-    const product = await ProductsDB.findByPk(req.params.id, {
+    const products = await ProductsDB.findByPk(req.params.id, {
       include: ["category"],
     });
 
-    res.status(200).json(product);
+    products.map((img) => {
+      fs.writeFileSync(
+        path.join(
+          __dirname,
+          "../images/products_images/output/" + img.id_product + "imagen.png"
+        ),
+        img.image_product
+      );
+    });
+    const imagesDir = fs.readdirSync(
+      path.join(__dirname, "../images/products_images/output/")
+    );
+
+    //*****
+    const resultadoFinal = products.map((product) => {
+      return {
+        id_product: product.id_product,
+        name_product: product.name_product,
+        price_product: product.price_product,
+        description_product: product.description_product,
+        stock_product: product.stock_product,
+        id_category: product.id_category,
+        image_product: `http://localhost:4005/${imagesDir.find((img) =>
+          img.includes(product.id_product)
+        )}`,
+        category: product.category,
+      };
+    });
+
+    res.status(200).json(resultadoFinal);
   } catch (error) {
     res.status(500).json(error);
     console.log(error);
